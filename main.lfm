@@ -1,0 +1,536 @@
+object MainForm: TMainForm
+  Left = 390
+  Height = 513
+  Top = 176
+  Width = 607
+  Caption = 'MainForm'
+  ClientHeight = 513
+  ClientWidth = 607
+  Menu = MainMenu1
+  UseDockManager = True
+  LCLVersion = '1.2.2.0'
+  object StatusBar1: TStatusBar
+    Left = 0
+    Height = 15
+    Top = 498
+    Width = 607
+    Panels = <>
+  end
+  object TabControl1: TTabControl
+    Left = 0
+    Height = 426
+    Top = 72
+    Width = 607
+    ScrollOpposite = True
+    Style = tsFlatButtons
+    Align = alClient
+    TabOrder = 1
+    object EditDockPanel: TPanel
+      Left = 2
+      Height = 394
+      Top = 30
+      Width = 603
+      Align = alClient
+      TabOrder = 1
+    end
+  end
+  object PageControl1: TPageControl
+    Left = 0
+    Height = 46
+    Top = 26
+    Width = 607
+    Align = alTop
+    BiDiMode = bdRightToLeft
+    ParentBiDiMode = False
+    TabOrder = 2
+    Visible = False
+  end
+  object ToolBar2: TToolBar
+    Left = 0
+    Height = 26
+    Top = 0
+    Width = 607
+    AutoSize = True
+    Caption = 'ToolBar2'
+    TabOrder = 3
+    Visible = False
+  end
+  object MainMenu1: TMainMenu
+    ParentBidiMode = False
+    top = 144
+    object Menu_RootFile: TMenuItem
+      Caption = 'ファイル'
+      object Menu_New: TMenuItem
+        Caption = '新規'
+        OnClick = Menu_NewClick
+      end
+      object MenuItem3: TMenuItem
+        Caption = '-'
+      end
+      object Menu_Open: TMenuItem
+        Caption = '開く'
+      end
+      object MenuItem5: TMenuItem
+        Caption = '最近扱ったファイルを開く'
+      end
+      object Menu_ReOpen: TMenuItem
+        Caption = '開き直す'
+      end
+      object MenuItem81: TMenuItem
+        Caption = '-'
+      end
+      object menu_save: TMenuItem
+        Caption = '保存 ...'
+      end
+      object Menu_SaveAs: TMenuItem
+        Caption = '名前を付けて保存'
+      end
+      object MenuItem91: TMenuItem
+        Caption = '-'
+      end
+      object Menu_All_Save: TMenuItem
+        Caption = '全て上書き保存'
+      end
+      object Menu_AllSaveAs: TMenuItem
+        Caption = '全て名前を付けて保存'
+      end
+      object MenuItem87: TMenuItem
+        Caption = '-'
+      end
+      object Menu_Ansi: TMenuItem
+        Caption = 'Ansi'
+      end
+      object Menu_UTF8_Ansi: TMenuItem
+        Caption = 'UTF8'
+      end
+      object Menu_Utf16: TMenuItem
+        Caption = 'UTF16'
+      end
+      object MenuItem86: TMenuItem
+        Caption = '-'
+      end
+      object Menu_Close: TMenuItem
+        Caption = '閉じる(&C)'
+      end
+      object Menu_AllClose: TMenuItem
+        Caption = '全て閉じる'
+      end
+      object MenuItem9: TMenuItem
+        Caption = '-'
+      end
+      object Menu_Exit: TMenuItem
+        Caption = '終了'
+      end
+    end
+    object Menu_RootEdit: TMenuItem
+      Caption = '編集'
+      object undo: TMenuItem
+        Caption = '元に戻す'
+      end
+      object redo: TMenuItem
+        Caption = 'やり直し'
+      end
+      object MenuItem14: TMenuItem
+        Caption = '-'
+      end
+      object cut: TMenuItem
+        Caption = '切り取り'
+      end
+      object cpy: TMenuItem
+        Caption = 'コピー'
+      end
+      object peast: TMenuItem
+        Caption = '貼り付け'
+      end
+      object selctall: TMenuItem
+        Caption = '全て選択'
+      end
+      object MenuItem18: TMenuItem
+        Caption = '-'
+      end
+      object Menu_Insert_Day: TMenuItem
+        Caption = '日付挿入'
+      end
+      object Menu_Insert_Time: TMenuItem
+        Caption = '現在時刻挿入'
+      end
+      object Menu_Insert_Calac: TMenuItem
+        Caption = '電卓'
+      end
+    end
+    object Menu_RootSupport: TMenuItem
+      Caption = '検索機能'
+      object Menu_FInds: TMenuItem
+        Caption = '検索/置換'
+      end
+      object Menu_repraceMcro: TMenuItem
+        Caption = '文字列操作関数'
+      end
+      object MenuItem2: TMenuItem
+        Caption = '-'
+      end
+      object mnu_SelectORline: TMenuItem
+        Caption = '行選択'
+      end
+      object Menu_URL: TMenuItem
+        Caption = 'URL参照'
+      end
+      object Menu_helpgoogle1: TMenuItem
+        Caption = '単語検索'
+      end
+      object Menu_helpgoogle2: TMenuItem
+        Caption = '単語検索　説明'
+      end
+      object Menu_helpgoogle3: TMenuItem
+        Caption = '単語検索　マニュアル'
+      end
+      object Menu_helpgoogle4: TMenuItem
+        Caption = '単語検索　入門'
+      end
+      object Menu_helpgoogle5: TMenuItem
+        Caption = '単語検索　サンプル'
+      end
+      object Menu_helpgoogle6: TMenuItem
+        Caption = '単語検索　テンプレート'
+      end
+      object Menu_helpgoogle7: TMenuItem
+        Caption = '単語検索　リファレンス'
+      end
+      object MenuItem1: TMenuItem
+        Caption = '-'
+      end
+      object Menu_code_support: TMenuItem
+        Caption = 'コード保管機能'
+      end
+      object Menu_CodeInsert: TMenuItem
+        Caption = '制御文代入'
+      end
+      object Menu_TemplatCode: TMenuItem
+        Caption = '定型文入力'
+      end
+    end
+    object Menu_RootHeightLight: TMenuItem
+      Caption = 'Edit設定'
+      object Menu_C: TMenuItem
+        Caption = 'C'
+        GroupIndex = 1
+      end
+      object Menu_Delphi: TMenuItem
+        Caption = 'Delphi'
+        GroupIndex = 1
+      end
+      object Menu_lazarus: TMenuItem
+        Caption = 'Lazarus'
+      end
+      object Menu_Pascal: TMenuItem
+        Caption = 'Pascal'
+        GroupIndex = 1
+      end
+      object Menu_Java: TMenuItem
+        Caption = 'Java'
+        GroupIndex = 1
+      end
+      object Menu_SQL: TMenuItem
+        Caption = 'SQL'
+        GroupIndex = 1
+      end
+      object Menu_XML: TMenuItem
+        Caption = 'XML'
+        GroupIndex = 1
+      end
+      object Menu_HTML: TMenuItem
+        Caption = 'HTML'
+        GroupIndex = 1
+      end
+      object Menu_Css: TMenuItem
+        Caption = 'Css'
+        GroupIndex = 1
+      end
+      object Menu_Perl: TMenuItem
+        Caption = 'Perl'
+        GroupIndex = 1
+      end
+      object Menu_PHP: TMenuItem
+        Caption = 'PHP'
+        GroupIndex = 1
+      end
+      object Menu_pyhton: TMenuItem
+        Caption = 'Python'
+        GroupIndex = 1
+      end
+      object MenuI_UnixShell: TMenuItem
+        Caption = 'UNIX Shell Script'
+        GroupIndex = 1
+      end
+      object Menu_VBScript: TMenuItem
+        Caption = 'VBA'
+        GroupIndex = 1
+      end
+      object Menu_BAT: TMenuItem
+        Caption = 'Bat'
+        GroupIndex = 1
+      end
+      object Menu_INI: TMenuItem
+        Caption = 'INI'
+        GroupIndex = 1
+      end
+      object MenuItem38: TMenuItem
+        Caption = 'Diff'
+        GroupIndex = 1
+        Visible = False
+      end
+      object MenuItem42: TMenuItem
+        Caption = 'LMF'
+        GroupIndex = 1
+        Visible = False
+      end
+      object MenuItem20: TMenuItem
+        Caption = 'TeX'
+        GroupIndex = 1
+        Visible = False
+      end
+      object MenuItem12: TMenuItem
+        Caption = 'Po'
+        GroupIndex = 1
+        Visible = False
+      end
+      object Menu_FreeHeightLight: TMenuItem
+        Caption = '自由設定'
+        GroupIndex = 1
+      end
+      object MenuItem54: TMenuItem
+        Caption = '-'
+      end
+      object Menu_LibOpen: TMenuItem
+        Caption = '補完ライブラリ指定'
+      end
+    end
+    object Menu_RootOption: TMenuItem
+      Caption = 'オプション'
+      object Menu_TEMP_Save: TMenuItem
+        Caption = '一時保存ファイル作成'
+      end
+      object Menu_TEMP_Load: TMenuItem
+        Caption = '一時保存ファイル呼び出し'
+      end
+      object Menu_OLD_Load: TMenuItem
+        Caption = '終了時復元'
+      end
+      object MenuItem30: TMenuItem
+        Caption = '-'
+      end
+      object Menu_MultWindow: TMenuItem
+        Caption = 'マルチウインドウ'
+      end
+      object MenuItem32: TMenuItem
+        Caption = '-'
+      end
+      object Menu_MemoMode: TMenuItem
+        Caption = 'Memo帳モード'
+      end
+      object MenuItem85: TMenuItem
+        Caption = '-'
+      end
+      object Menu_SetFont: TMenuItem
+        Caption = 'フォント設定'
+      end
+      object Menu_FontColor: TMenuItem
+        Caption = 'フォントカラー'
+      end
+      object Menu_BackColor: TMenuItem
+        Caption = 'バックカラー'
+      end
+      object Menu_EditColor: TMenuItem
+        Caption = 'エディタカラー設定'
+      end
+      object Menu_HilightColor: TMenuItem
+        Caption = 'ハイライトカラー設定'
+      end
+      object Menu_Option: TMenuItem
+        Caption = '各種設定'
+      end
+      object Menu_ToolButtonSet: TMenuItem
+        Caption = 'ツールバーボタン追加'
+      end
+      object Menu_SetMnu: TMenuItem
+        Caption = 'メニューの設定'
+      end
+      object MenuItem102: TMenuItem
+        Caption = '-'
+      end
+      object Menu_ToolBarTAB: TMenuItem
+        Caption = 'ツールバーのタブ化'
+      end
+      object barleft: TMenuItem
+        Caption = 'バーを右寄'
+      end
+      object barright: TMenuItem
+        Caption = 'バーを左寄'
+      end
+      object bartop: TMenuItem
+        Caption = 'バーを上寄'
+      end
+      object barbottom: TMenuItem
+        Caption = 'バーを下寄'
+      end
+    end
+    object Menu_RootTAB: TMenuItem
+      Caption = 'タブ'
+      object Menu_TabCheng: TMenuItem
+        Caption = 'タブ切り替え'
+      end
+    end
+    object Menu_RootWindow: TMenuItem
+      Caption = 'ウインドウ'
+      object Menu_WindowLock: TMenuItem
+        Caption = 'ウインドウ追従'
+      end
+      object MenuItem79: TMenuItem
+        Caption = '-'
+      end
+      object Menu_WindowAllMin: TMenuItem
+        Caption = '全て最少化'
+      end
+      object Menu_WindowAllMax: TMenuItem
+        Caption = '全て最大化'
+      end
+      object Menu_WIndow_AllNomalSize: TMenuItem
+        Caption = '全て開く'
+      end
+      object MenuItem50: TMenuItem
+        Caption = '-'
+      end
+      object Menu_WindowMin: TMenuItem
+        Caption = 'アイコン化'
+      end
+      object Menu_WindowMax: TMenuItem
+        Caption = '最大化'
+      end
+      object Menu_WIndowNomalSize: TMenuItem
+        Caption = 'ウインドウを開く'
+      end
+      object MenuItem67: TMenuItem
+        Caption = '-'
+      end
+      object Menu_WindowLeft: TMenuItem
+        Caption = '右に寄せる'
+      end
+      object Menu_WindowRight: TMenuItem
+        Caption = '左に寄せる'
+      end
+      object MenuWindowTop: TMenuItem
+        Caption = '上に寄せる'
+      end
+      object Menu_WindowBottom: TMenuItem
+        Caption = '下に寄せる'
+      end
+    end
+    object Menu_RootMacro: TMenuItem
+      Caption = 'RUN'
+      object MenuItem90: TMenuItem
+        Caption = 'runcommand'
+        Visible = False
+      end
+      object Menu_MacroSetUp: TMenuItem
+        Caption = 'コマンド追加'
+      end
+      object Menu_MacroElse: TMenuItem
+        Caption = 'コマンド削除'
+      end
+      object MenuItem88: TMenuItem
+        Caption = '-'
+        object MenuItem6: TMenuItem
+          Caption = 'New Item126'
+          Visible = False
+        end
+      end
+      object MenuItem4: TMenuItem
+        Caption = 'マクロ言語指定'
+      end
+      object MenuItem7: TMenuItem
+        Caption = 'マクロ記号挿入'
+      end
+      object Menu_Macro_codeRun: TMenuItem
+        Caption = 'マクロ実行'
+      end
+      object Menu_MacroRun: TMenuItem
+        Caption = '実行'
+      end
+      object MenuItem95: TMenuItem
+        Caption = '-'
+      end
+    end
+    object Menu_Custom: TMenuItem
+      Caption = '拡張'
+    end
+    object Menu_RootHelp: TMenuItem
+      Caption = 'ヘルプ'
+      object MenuItem22: TMenuItem
+        Caption = '目次'
+      end
+      object MenuItem23: TMenuItem
+        Caption = 'チュートリアル'
+      end
+      object MenuItem24: TMenuItem
+        Caption = '-'
+      end
+      object Menu_Vershon: TMenuItem
+        Caption = '紹介'
+      end
+    end
+  end
+  object PopupMenu1: TPopupMenu
+    left = 72
+    top = 144
+    object popundo: TMenuItem
+      Caption = '元に戻す'
+    end
+    object Menu_Redo: TMenuItem
+      Caption = 'やり直し'
+    end
+    object MenuItem76: TMenuItem
+      Caption = '-'
+    end
+    object Menu_cut: TMenuItem
+      Caption = '切り取り'
+    end
+    object Menu_Copy: TMenuItem
+      Caption = 'コピー'
+    end
+    object Menu_Paste: TMenuItem
+      Caption = '貼り付け'
+    end
+    object Menu_SelctAll: TMenuItem
+      Caption = '全て選択'
+    end
+    object MenuItem71: TMenuItem
+      Caption = '-'
+    end
+    object Menu_Find: TMenuItem
+      Caption = '検索/置き換え'
+    end
+  end
+  object Timer_WIndowLock: TTimer
+    Enabled = False
+    Interval = 200
+    left = 184
+    top = 80
+  end
+  object Timer_MenuEdited: TTimer
+    Interval = 500
+    left = 80
+    top = 80
+  end
+  object Timer_StartUp: TTimer
+    Enabled = False
+    Interval = 100
+    left = 272
+    top = 80
+  end
+  object Timer_ToolBarSet: TTimer
+    Enabled = False
+    Interval = 100
+    left = 384
+    top = 80
+  end
+end
