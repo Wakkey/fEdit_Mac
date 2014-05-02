@@ -7,6 +7,8 @@ object MainForm: TMainForm
   ClientHeight = 513
   ClientWidth = 607
   Menu = MainMenu1
+  OnChangeBounds = FormChangeBounds
+  OnCreate = FormCreate
   UseDockManager = True
   LCLVersion = '1.2.2.0'
   object StatusBar1: TStatusBar
@@ -21,9 +23,12 @@ object MainForm: TMainForm
     Height = 426
     Top = 72
     Width = 607
+    OnChange = TabControl1Change
+    OnChanging = TabControl1Changing
     ScrollOpposite = True
     Style = tsFlatButtons
     Align = alClient
+    OnChangeBounds = TabControl1ChangeBounds
     TabOrder = 1
     object EditDockPanel: TPanel
       Left = 2
@@ -39,6 +44,7 @@ object MainForm: TMainForm
     Height = 46
     Top = 26
     Width = 607
+    HelpType = htKeyword
     Align = alTop
     BiDiMode = bdRightToLeft
     ParentBiDiMode = False
@@ -57,11 +63,13 @@ object MainForm: TMainForm
   end
   object MainMenu1: TMainMenu
     ParentBidiMode = False
+    left = 120
     top = 144
     object Menu_RootFile: TMenuItem
       Caption = 'ファイル'
       object Menu_New: TMenuItem
         Caption = '新規'
+        OnClick = Menu_NewClick
       end
       object MenuItem3: TMenuItem
         Caption = '-'
@@ -479,7 +487,7 @@ object MainForm: TMainForm
     end
   end
   object PopupMenu1: TPopupMenu
-    left = 72
+    left = 80
     top = 144
     object popundo: TMenuItem
       Caption = '元に戻す'
@@ -508,28 +516,5 @@ object MainForm: TMainForm
     object Menu_Find: TMenuItem
       Caption = '検索/置き換え'
     end
-  end
-  object Timer_WIndowLock: TTimer
-    Enabled = False
-    Interval = 200
-    left = 184
-    top = 80
-  end
-  object Timer_MenuEdited: TTimer
-    Interval = 500
-    left = 80
-    top = 80
-  end
-  object Timer_StartUp: TTimer
-    Enabled = False
-    Interval = 100
-    left = 272
-    top = 80
-  end
-  object Timer_ToolBarSet: TTimer
-    Enabled = False
-    Interval = 100
-    left = 384
-    top = 80
   end
 end

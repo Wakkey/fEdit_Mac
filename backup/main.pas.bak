@@ -17,6 +17,7 @@ type
   TMainForm = class(TForm)
     cpy: TMenuItem;
     cut: TMenuItem;
+    EditDockPanel: TPanel;
     MainMenu1: TMainMenu;
     MenuItem1: TMenuItem;
     MenuItem2: TMenuItem;
@@ -152,7 +153,6 @@ type
     Menu_Insert_Day: TMenuItem;
     Menu_Insert_Time: TMenuItem;
     PageControl1: TPageControl;
-    EditDockPanel: TPanel;
     peast: TMenuItem;
     popundo: TMenuItem;
     PopupMenu1: TPopupMenu;
@@ -160,12 +160,14 @@ type
     selctall: TMenuItem;
     StatusBar1: TStatusBar;
     TabControl1: TTabControl;
-    Timer_MenuEdited: TTimer;
-    Timer_WIndowLock: TTimer;
-    Timer_StartUp: TTimer;
-    Timer_ToolBarSet: TTimer;
     ToolBar2: TToolBar;
     undo: TMenuItem;
+    procedure FormChangeBounds(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure Menu_NewClick(Sender: TObject);
+    procedure TabControl1Change(Sender: TObject);
+    procedure TabControl1ChangeBounds(Sender: TObject);
+    procedure TabControl1Changing(Sender: TObject; var AllowChange: Boolean);
    private
     { private declarations }
 
@@ -180,6 +182,66 @@ var
 implementation
 
 uses edit,function_unit;
+
+{ TMainForm }
+
+procedure TMainForm.Menu_NewClick(Sender: TObject);
+var
+  i:integer;
+begin
+  //mainform.TabControl1.Tabs.Add('new' + inttostr(mainform.TabControl1.Tabs.Count));
+  i := functionunit.editlist.Count;
+  functionunit.newwindow(i);
+  functionunit.window_off(i);
+  mainform.TabControl1.TabIndex:= i;
+  //functionunit.chengtab(i);
+   //mainform.tabclicks := true;
+   functionunit.resizewindow2;
+end;
+
+procedure TMainForm.TabControl1Change(Sender: TObject);
+begin
+
+end;
+
+procedure TMainForm.TabControl1ChangeBounds(Sender: TObject);
+begin
+
+end;
+
+procedure TMainForm.TabControl1Changing(Sender: TObject;
+  var AllowChange: Boolean);
+var
+  i:integer;
+begin
+  i := MainForm.TabControl1.TabIndex;
+  //if MainForm.T_W_sw then begin
+    //exit;
+  //end;
+  //if MainForm.TabControl1.Tabs[i] = 'ADD' then begin
+    //Menu_NewClick(Sender);
+   // exit;
+  //end;
+   functionunit.chengtab(i);
+   //mainform.tabclicks := true;
+   functionunit.resizewindow2;
+
+end;
+
+
+
+procedure TMainForm.FormChangeBounds(Sender: TObject);
+begin
+  if MainForm.Height <> screen.Height then
+    if MainForm.Width <> screen.Width then
+      functionunit.frmpsnset(mainform.TabControl1.TabIndex);
+  functionunit.resizewindow2;
+end;
+
+procedure TMainForm.FormCreate(Sender: TObject);
+begin
+
+end;
 
 
 
