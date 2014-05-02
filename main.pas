@@ -164,6 +164,8 @@ type
     undo: TMenuItem;
     procedure FormChangeBounds(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure Menu_AllCloseClick(Sender: TObject);
+    procedure Menu_CloseClick(Sender: TObject);
     procedure Menu_NewClick(Sender: TObject);
     procedure TabControl1Change(Sender: TObject);
     procedure TabControl1ChangeBounds(Sender: TObject);
@@ -181,50 +183,28 @@ var
 
 implementation
 
-uses edit,function_unit;
+uses edit,functionunit;
 
 { TMainForm }
+{$R *.lfm}
 
 procedure TMainForm.Menu_NewClick(Sender: TObject);
-var
-  i:integer;
 begin
-  //mainform.TabControl1.Tabs.Add('new' + inttostr(mainform.TabControl1.Tabs.Count));
-  i := functionunit.editlist.Count;
-  functionunit.newwindow(i);
-  functionunit.window_off(i);
-  mainform.TabControl1.TabIndex:= i;
-  //functionunit.chengtab(i);
-   //mainform.tabclicks := true;
-   functionunit.resizewindow2;
+  function_unit.newedit( function_unit.editlist.Count );
 end;
 
 procedure TMainForm.TabControl1Change(Sender: TObject);
-var
-  i:integer;
 begin
-  i := MainForm.TabControl1.TabIndex;
-  //if MainForm.T_W_sw then begin
-    //exit;
-  //end;
-  //if MainForm.TabControl1.Tabs[i] = 'ADD' then begin
-    //Menu_NewClick(Sender);
-   // exit;
-  //end;
-   functionunit.chengtab(i);
-   //mainform.tabclicks := true;
-   functionunit.resizewindow2;
+  function_unit.changtabset(MainForm.TabControl1.TabIndex);
 end;
 
 procedure TMainForm.TabControl1ChangeBounds(Sender: TObject);
 begin
-
+  function_unit.chingSize(mainform.TabControl1.TabIndex);
 end;
 
 procedure TMainForm.TabControl1Changing(Sender: TObject;
   var AllowChange: Boolean);
-var
-  i:integer;
 begin
 
 
@@ -234,10 +214,7 @@ end;
 
 procedure TMainForm.FormChangeBounds(Sender: TObject);
 begin
-  if MainForm.Height <> screen.Height then
-    if MainForm.Width <> screen.Width then
-      functionunit.frmpsnset(mainform.TabControl1.TabIndex);
-  functionunit.resizewindow2;
+ function_unit.chingSize(mainform.TabControl1.TabIndex);
 end;
 
 procedure TMainForm.FormCreate(Sender: TObject);
@@ -245,13 +222,17 @@ begin
 
 end;
 
+procedure TMainForm.Menu_AllCloseClick(Sender: TObject);
+begin
+ function_unit.closeAllTab;
+end;
 
-
-{ TMainForm }
-
-//ここからプロコドル
-
-{$R *.lfm}
+procedure TMainForm.Menu_CloseClick(Sender: TObject);
+var
+  i:integer;
+begin
+  function_unit.closeTab( mainform.TabControl1.TabIndex );
+end;
 
 end.
 

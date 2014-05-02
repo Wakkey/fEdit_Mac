@@ -94,9 +94,10 @@ end;
 function Tfunctionunit.newwindow(count:integer):boolean;
 begin
   editlist.add(Teditfrm);
-  showmessage(inttostr(count));
   editlist.Items[count] := Teditfrm.Create(self);
-
+  editlist.Items[count].Name:= 'new' + inttostr(count);
+  mainform.TabControl1.Tabs.Insert(count,'');
+  mainform.TabControl1.Tabs[count] := editlist.Items[count].Name;
 
   editlist.Items[count].Visible:= false;
   editlist.Items[count].SynMemo1.Lines.Clear;

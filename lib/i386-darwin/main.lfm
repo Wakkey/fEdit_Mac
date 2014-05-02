@@ -118,9 +118,11 @@ object MainForm: TMainForm
       end
       object Menu_Close: TMenuItem
         Caption = '閉じる(&C)'
+        OnClick = Menu_CloseClick
       end
       object Menu_AllClose: TMenuItem
         Caption = '全て閉じる'
+        OnClick = Menu_AllCloseClick
       end
       object MenuItem9: TMenuItem
         Caption = '-'

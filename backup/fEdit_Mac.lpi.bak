@@ -58,12 +58,12 @@
         <UnitName Value="Main"/>
       </Unit2>
       <Unit3>
-        <Filename Value="function_unit.pas"/>
+        <Filename Value="functionunit.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="functionunit"/>
+        <ComponentName Value="function_unit"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="function_unit"/>
+        <UnitName Value="functionunit"/>
       </Unit3>
     </Units>
   </ProjectOptions>

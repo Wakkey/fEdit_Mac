@@ -7,8 +7,7 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, edit, Main, function_unit
-  { you can add units after this };
+  Forms, edit, Main, functionunit;
 
 {$R *.res}
 
@@ -16,7 +15,7 @@ begin
   RequireDerivedFormResource := True;
   Application.Initialize;
   Application.CreateForm(TMainForm, MainForm);
-  Application.CreateForm(Tfunctionunit, functionunit);
+  Application.CreateForm(Tfunction_unit, function_unit);
   Application.Run;
 end.
 
