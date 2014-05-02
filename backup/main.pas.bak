@@ -167,6 +167,7 @@ type
     procedure Menu_AllCloseClick(Sender: TObject);
     procedure Menu_CloseClick(Sender: TObject);
     procedure Menu_NewClick(Sender: TObject);
+    procedure Menu_OpenClick(Sender: TObject);
     procedure TabControl1Change(Sender: TObject);
     procedure TabControl1ChangeBounds(Sender: TObject);
     procedure TabControl1Changing(Sender: TObject; var AllowChange: Boolean);
@@ -191,6 +192,12 @@ uses edit,functionunit;
 procedure TMainForm.Menu_NewClick(Sender: TObject);
 begin
   function_unit.newedit( function_unit.editlist.Count );
+end;
+
+procedure TMainForm.Menu_OpenClick(Sender: TObject);
+begin
+  function_unit.fileOpen;
+
 end;
 
 procedure TMainForm.TabControl1Change(Sender: TObject);
@@ -223,14 +230,8 @@ begin
 end;
 
 procedure TMainForm.Menu_AllCloseClick(Sender: TObject);
-var
-  i:integer;
 begin
-  i:= function_unit.editlist.Count;
-  while i > 0 do begin
-    function_unit.closeTab(0);
-    dec(i);
-  end;
+ function_unit.closeAllTab;
 end;
 
 procedure TMainForm.Menu_CloseClick(Sender: TObject);

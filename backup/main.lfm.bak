@@ -76,6 +76,7 @@ object MainForm: TMainForm
       end
       object Menu_Open: TMenuItem
         Caption = '開く'
+        OnClick = Menu_OpenClick
       end
       object MenuItem5: TMenuItem
         Caption = '最近扱ったファイルを開く'

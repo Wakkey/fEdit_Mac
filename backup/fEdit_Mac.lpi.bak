@@ -27,15 +27,18 @@
         <FormatVersion Value="1"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="2">
+    <RequiredPackages Count="3">
       <Item1>
-        <PackageName Value="SynEdit"/>
+        <PackageName Value="Printer4Lazarus"/>
       </Item1>
       <Item2>
-        <PackageName Value="LCL"/>
+        <PackageName Value="SynEdit"/>
       </Item2>
+      <Item3>
+        <PackageName Value="LCL"/>
+      </Item3>
     </RequiredPackages>
-    <Units Count="4">
+    <Units Count="5">
       <Unit0>
         <Filename Value="fEdit_Mac.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -65,6 +68,13 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="functionunit"/>
       </Unit3>
+      <Unit4>
+        <Filename Value="compunit.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="comp_unit"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="compunit"/>
+      </Unit4>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

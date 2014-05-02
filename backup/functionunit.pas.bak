@@ -28,12 +28,15 @@ type
     function window_off(i:integer):boolean;
     function newwindow(count:integer):boolean;
     function newedit(i:integer):boolean;
+    function filesOpen:boolean;
+
     function chingSize(i:integer):boolean;
     function frmpsnset(count:integer):boolean;
     function resizedocwindow(count:integer):boolean;
     function resizewindow2:boolean;
     function changtabset(i:integer):boolean;
     function closeTab(i:integer):boolean;
+    function closeAllTab:boolean;
 
     function chengingtab(i:integer):boolean;
 
@@ -46,7 +49,7 @@ var
 
 implementation
 
-uses Main;
+uses Main,compunit;
 
 {$R *.lfm}
 
@@ -147,6 +150,21 @@ begin
    function_unit.resizewindow2;
 end;
 
+function Tfunction_unit.filesOpen:boolean;
+var
+  i,i1:integer;
+begin
+  if not comp_unit.OpenDialog1.Execute then
+    exit;
+
+  for i1 := 0 to comp_unit.OpenDialog1.Files.Count -1 do begin;
+    i := function_unit.editlist.Count;
+    function_unit.newedit( i );
+    function_unit.editlist[ i ].lines_tmp.LoadFromFile( comp_unit.OpenDialog1.Files[i1] );
+    function_unit.editlist.Items[ i ].SynMemo1.Lines.Text:= function_unit.editlist[ i ].lines_tmp.Text;
+  end;
+end;
+
 function Tfunction_unit.frmpsnset(count:integer):boolean;
 begin
   with editlist.Items[count] do begin
@@ -216,7 +234,16 @@ begin
   mainform.TabControl1.Tabs.Delete(i);
 end;
 
-
+function Tfunction_unit.closeAllTab:boolean;
+var
+  i:integer;
+begin
+  i:= function_unit.editlist.Count;
+  while i > 0 do begin
+    function_unit.closeTab(0);
+    dec(i);
+  end;
+end;
 
 function Tfunction_unit.chengtab(i1:integer):boolean;
   {function edittypeset(s:string):boolean;

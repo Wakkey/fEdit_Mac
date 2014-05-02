@@ -28,6 +28,8 @@ type
     function window_off(i:integer):boolean;
     function newwindow(count:integer):boolean;
     function newedit(i:integer):boolean;
+    function filesOpen:boolean;
+
     function chingSize(i:integer):boolean;
     function frmpsnset(count:integer):boolean;
     function resizedocwindow(count:integer):boolean;
@@ -47,7 +49,7 @@ var
 
 implementation
 
-uses Main;
+uses Main,compunit;
 
 {$R *.lfm}
 
@@ -146,6 +148,23 @@ begin
   //function_unit.chengtab(i);
    //mainform.tabclicks := true;
    function_unit.resizewindow2;
+end;
+
+function Tfunction_unit.filesOpen:boolean;
+var
+  i,i1:integer;
+begin
+  if not comp_unit.OpenDialog1.Execute then
+    exit;
+
+  for i1 := 0 to comp_unit.OpenDialog1.Files.Count -1 do begin;
+    i := function_unit.editlist.Count;
+    function_unit.newedit( i );
+    function_unit.editlist[ i ].filename_path:= comp_unit.OpenDialog1.Files[i1];
+    //function_unit.editlist[ i ].Name:= ;
+    function_unit.editlist[ i ].lines_tmp.LoadFromFile( comp_unit.OpenDialog1.Files[i1] );
+    function_unit.editlist.Items[ i ].SynMemo1.Lines.Text:= function_unit.editlist[ i ].lines_tmp.Text;
+  end;
 end;
 
 function Tfunction_unit.frmpsnset(count:integer):boolean;

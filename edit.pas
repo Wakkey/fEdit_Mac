@@ -18,6 +18,8 @@ type
     { private declarations }
   public
     { public declarations }
+    lines_tmp:TStringList;
+    filename_path:string;
   end;
 
 var
@@ -31,7 +33,8 @@ implementation
 
 procedure Teditfrm.FormCreate(Sender: TObject);
 begin
-
+  lines_tmp := TStringList.Create;
+  lines_tmp.Clear;
 end;
 
 end.
