@@ -83,24 +83,29 @@ object MainForm: TMainForm
       end
       object Menu_ReOpen: TMenuItem
         Caption = '開き直す'
+        OnClick = Menu_ReOpenClick
       end
       object MenuItem81: TMenuItem
         Caption = '-'
       end
       object menu_save: TMenuItem
         Caption = '保存 ...'
+        OnClick = menu_saveClick
       end
       object Menu_SaveAs: TMenuItem
         Caption = '名前を付けて保存'
+        OnClick = Menu_SaveAsClick
       end
       object MenuItem91: TMenuItem
         Caption = '-'
       end
       object Menu_All_Save: TMenuItem
         Caption = '全て上書き保存'
+        OnClick = Menu_All_SaveClick
       end
       object Menu_AllSaveAs: TMenuItem
         Caption = '全て名前を付けて保存'
+        OnClick = Menu_AllSaveAsClick
       end
       object MenuItem87: TMenuItem
         Caption = '-'

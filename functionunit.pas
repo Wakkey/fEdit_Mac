@@ -25,11 +25,16 @@ type
   public
     { public declarations }
     editlist:Teditlist;
+    TitleName:string;
     function window_off(i:integer):boolean;
     function newwindow(count:integer):boolean;
     function newedit(i:integer):boolean;
     function filesOpen:boolean;
-
+    function open(i:integer;s:string):boolean;
+    function save(i:integer):boolean;
+    function saveas(i:integer):boolean;
+    function AllSave:boolean;
+    function AllSaveAs:boolean;
     function chingSize(i:integer):boolean;
     function frmpsnset(count:integer):boolean;
     function resizedocwindow(count:integer):boolean;
@@ -59,6 +64,7 @@ procedure Tfunction_unit.FormCreate(Sender: TObject);
 begin
   editlist := TeditList.Create;
   editlist.clear;
+  TitleName := 'fEdit 0.10 ';
 end;
 
 
@@ -110,9 +116,9 @@ function Tfunction_unit.newwindow(count:integer):boolean;
 begin
   editlist.add(Teditfrm);
   editlist.Items[count] := Teditfrm.Create(self);
-  editlist.Items[count].Name:= 'new' + inttostr(count);
+  editlist.Items[count].filename_path:= 'new' + inttostr(count);
   mainform.TabControl1.Tabs.Insert(count,'');
-  mainform.TabControl1.Tabs[count] := editlist.Items[count].Name;
+  mainform.TabControl1.Tabs[count] := editlist.Items[count].filename_path;
 
   editlist.Items[count].Visible:= false;
   editlist.Items[count].SynMemo1.Lines.Clear;
@@ -161,9 +167,48 @@ begin
     i := function_unit.editlist.Count;
     function_unit.newedit( i );
     function_unit.editlist[ i ].filename_path:= comp_unit.OpenDialog1.Files[i1];
-    //function_unit.editlist[ i ].Name:= ;
-    function_unit.editlist[ i ].lines_tmp.LoadFromFile( comp_unit.OpenDialog1.Files[i1] );
-    function_unit.editlist.Items[ i ].SynMemo1.Lines.Text:= function_unit.editlist[ i ].lines_tmp.Text;
+    mainform.TabControl1.Tabs[ i ] :=  ExtractFileName( function_unit.editlist.Items[ i ].filename_path );
+    mainform.Caption:= function_unit.TitleName + '[' + function_unit.editlist.Items[ i ].filename_path + ']';
+    function_unit.open( i, comp_unit.OpenDialog1.Files[i1]);
+  end;
+end;
+
+function Tfunction_unit.open(i:integer;s:string):boolean;
+begin
+  function_unit.editlist[ i ].lines_tmp.LoadFromFile( s );
+  function_unit.editlist.Items[ i ].SynMemo1.Lines.Text:= function_unit.editlist[ i ].lines_tmp.Text;
+end;
+
+function Tfunction_unit.save(i:integer):boolean;
+begin
+  function_unit.editlist.Items[i].lines_tmp.SaveToFile(
+    function_unit.editlist.Items[i].filename_path
+  );
+end;
+
+function Tfunction_unit.saveas(i:integer):boolean;
+begin
+  if not comp_unit.SaveDialog1.Execute then
+     exit;
+  function_unit.editlist.Items[i].filename_path:= comp_unit.SaveDialog1.FileName;
+  function_unit.save(i);
+end;
+
+function Tfunction_unit.AllSave:boolean;
+var
+  i:integer;
+begin
+  for i :=0 to function_unit.editlist.Count -1 do begin
+    function_unit.save(i);
+  end;
+end;
+
+function Tfunction_unit.AllSaveAs:boolean;
+var
+  i:integer;
+begin
+  for i :=0 to function_unit.editlist.Count -1 do begin
+    function_unit.saveas(i);
   end;
 end;
 
@@ -187,6 +232,7 @@ begin
    // exit;
   //end;
    function_unit.chengtab(i);
+   mainform.Caption:= function_unit.TitleName + '[' + function_unit.editlist.Items[ i ].filename_path + ']';
    //mainform.tabclicks := true;
    function_unit.resizewindow2;
 end;

@@ -168,6 +168,9 @@ type
     procedure Menu_CloseClick(Sender: TObject);
     procedure Menu_NewClick(Sender: TObject);
     procedure Menu_OpenClick(Sender: TObject);
+    procedure Menu_ReOpenClick(Sender: TObject);
+    procedure Menu_SaveAsClick(Sender: TObject);
+    procedure menu_saveClick(Sender: TObject);
     procedure TabControl1Change(Sender: TObject);
     procedure TabControl1ChangeBounds(Sender: TObject);
     procedure TabControl1Changing(Sender: TObject; var AllowChange: Boolean);
@@ -196,8 +199,26 @@ end;
 
 procedure TMainForm.Menu_OpenClick(Sender: TObject);
 begin
-  function_unit.fileOpen;
+  function_unit.filesOpen;
 
+end;
+
+procedure TMainForm.Menu_ReOpenClick(Sender: TObject);
+var
+  i:integer;
+begin
+  i := mainform.TabControl1.TabIndex;
+  function_unit.open(i,function_unit.editlist.Items[i].filename_path);
+end;
+
+procedure TMainForm.Menu_SaveAsClick(Sender: TObject);
+begin
+  function_unit.saveas(mainform.TabControl1.TabIndex);
+end;
+
+procedure TMainForm.menu_saveClick(Sender: TObject);
+begin
+  function_unit.save(mainform.TabControl1.TabIndex);
 end;
 
 procedure TMainForm.TabControl1Change(Sender: TObject);
