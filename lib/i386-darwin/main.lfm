@@ -112,12 +112,15 @@ object MainForm: TMainForm
       end
       object Menu_Ansi: TMenuItem
         Caption = 'Ansi'
+        OnClick = Menu_AnsiClick
       end
       object Menu_UTF8_Ansi: TMenuItem
         Caption = 'UTF8'
+        OnClick = Menu_UTF8_AnsiClick
       end
       object Menu_Utf16: TMenuItem
         Caption = 'UTF16'
+        OnClick = Menu_Utf16Click
       end
       object MenuItem86: TMenuItem
         Caption = '-'

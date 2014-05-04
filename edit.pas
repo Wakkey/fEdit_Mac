@@ -20,6 +20,7 @@ type
     { public declarations }
     lines_tmp:TStringList;
     filename_path:string;
+    charset:string;
   end;
 
 var

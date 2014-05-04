@@ -167,12 +167,15 @@ type
     procedure Menu_AllCloseClick(Sender: TObject);
     procedure Menu_AllSaveAsClick(Sender: TObject);
     procedure Menu_All_SaveClick(Sender: TObject);
+    procedure Menu_AnsiClick(Sender: TObject);
     procedure Menu_CloseClick(Sender: TObject);
     procedure Menu_NewClick(Sender: TObject);
     procedure Menu_OpenClick(Sender: TObject);
     procedure Menu_ReOpenClick(Sender: TObject);
     procedure Menu_SaveAsClick(Sender: TObject);
     procedure menu_saveClick(Sender: TObject);
+    procedure Menu_Utf16Click(Sender: TObject);
+    procedure Menu_UTF8_AnsiClick(Sender: TObject);
     procedure TabControl1Change(Sender: TObject);
     procedure TabControl1ChangeBounds(Sender: TObject);
     procedure TabControl1Changing(Sender: TObject; var AllowChange: Boolean);
@@ -221,6 +224,21 @@ end;
 procedure TMainForm.menu_saveClick(Sender: TObject);
 begin
   function_unit.save(mainform.TabControl1.TabIndex);
+end;
+
+procedure TMainForm.Menu_AnsiClick(Sender: TObject);
+begin
+  function_unit.set_char(mainform.TabControl1.TabIndex,'Ansi');
+end;
+
+procedure TMainForm.Menu_Utf16Click(Sender: TObject);
+begin
+  function_unit.set_char(mainform.TabControl1.TabIndex,'Utf16');
+end;
+
+procedure TMainForm.Menu_UTF8_AnsiClick(Sender: TObject);
+begin
+  function_unit.set_char(mainform.TabControl1.TabIndex,'Utf8');
 end;
 
 procedure TMainForm.TabControl1Change(Sender: TObject);

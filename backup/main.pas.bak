@@ -165,6 +165,8 @@ type
     procedure FormChangeBounds(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Menu_AllCloseClick(Sender: TObject);
+    procedure Menu_AllSaveAsClick(Sender: TObject);
+    procedure Menu_All_SaveClick(Sender: TObject);
     procedure Menu_CloseClick(Sender: TObject);
     procedure Menu_NewClick(Sender: TObject);
     procedure Menu_OpenClick(Sender: TObject);
@@ -253,6 +255,16 @@ end;
 procedure TMainForm.Menu_AllCloseClick(Sender: TObject);
 begin
  function_unit.closeAllTab;
+end;
+
+procedure TMainForm.Menu_AllSaveAsClick(Sender: TObject);
+begin
+  function_unit.AllSaveas;
+end;
+
+procedure TMainForm.Menu_All_SaveClick(Sender: TObject);
+begin
+  function_unit.AllSave;
 end;
 
 procedure TMainForm.Menu_CloseClick(Sender: TObject);

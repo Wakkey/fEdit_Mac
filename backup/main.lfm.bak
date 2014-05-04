@@ -101,9 +101,11 @@ object MainForm: TMainForm
       end
       object Menu_All_Save: TMenuItem
         Caption = '全て上書き保存'
+        OnClick = Menu_All_SaveClick
       end
       object Menu_AllSaveAs: TMenuItem
         Caption = '全て名前を付けて保存'
+        OnClick = Menu_AllSaveAsClick
       end
       object MenuItem87: TMenuItem
         Caption = '-'

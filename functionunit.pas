@@ -26,6 +26,8 @@ type
     { public declarations }
     editlist:Teditlist;
     TitleName:string;
+    charset_new:string;
+    function set_char(i:integer;s:string):string;
     function window_off(i:integer):boolean;
     function newwindow(count:integer):boolean;
     function newedit(i:integer):boolean;
@@ -59,6 +61,40 @@ uses Main,compunit;
 {$R *.lfm}
 
 { Tfunction_unit }
+function UTF8ToUTF16(const S: AnsiString):WIdeString;
+begin
+  UTF8ToUTF16 := s;
+end;
+
+function UTF16ToUTF8(const S: WIdeString):AnsiString;
+begin
+  UTF16ToUTF8 := s;
+end;
+
+function Tfunction_unit.set_char(i:integer;s:string):string;
+begin
+  function_unit.charset_new:= s;
+  if  s = 'Ansi' then begin
+    mainform.Menu_Ansi.Checked:=true;
+    mainform.Menu_UTF8_Ansi.Checked:=false;
+    mainform.Menu_UTF16.Checked:=false;
+  end else if s = 'Utf8' then begin
+    mainform.Menu_Ansi.Checked:=false;
+    mainform.Menu_UTF8_Ansi.Checked:=true;
+    mainform.Menu_UTF16.Checked:=false;
+  end else if s = 'Utf8' then begin
+    mainform.Menu_Ansi.Checked:=false;
+    mainform.Menu_UTF8_Ansi.Checked:=false;
+    mainform.Menu_UTF16.Checked:=true;
+  end;
+  if i = -1 then begin
+    exit;
+  end;
+  if s = '?' then begin
+    set_char := function_unit.editlist.Items[i].charset
+  end;
+  function_unit.editlist.Items[i].charset:= s;
+end;
 
 procedure Tfunction_unit.FormCreate(Sender: TObject);
 begin
@@ -176,14 +212,34 @@ end;
 function Tfunction_unit.open(i:integer;s:string):boolean;
 begin
   function_unit.editlist[ i ].lines_tmp.LoadFromFile( s );
-  function_unit.editlist.Items[ i ].SynMemo1.Lines.Text:= function_unit.editlist[ i ].lines_tmp.Text;
+  if function_unit.editlist.Items[i].charset = '' then begin
+    function_unit.editlist.Items[i].charset := function_unit.charset_new;
+  end;
+  if function_unit.editlist.Items[i].charset = 'Ansi' then begin
+    function_unit.editlist.Items[ i ].SynMemo1.Lines.Text:= utf8toansi(function_unit.editlist[ i ].lines_tmp.Text);
+  end else if function_unit.editlist.Items[i].charset = 'Utf8' then begin
+    function_unit.editlist.Items[ i ].SynMemo1.Lines.Text:= (function_unit.editlist[ i ].lines_tmp.Text);
+  end else if function_unit.editlist.Items[i].charset = 'Utf16' then begin
+    function_unit.editlist.Items[ i ].SynMemo1.Lines.Text:= Utf8toUtf16(function_unit.editlist[ i ].lines_tmp.Text);
+  end;
 end;
 
 function Tfunction_unit.save(i:integer):boolean;
+var
+  s:string;
 begin
+  s := function_unit.set_char(i,'?');
+  if s = 'Ansi' then begin
+    function_unit.editlist.Items[i].lines_tmp.Text := Utf8toAnsi(function_unit.editlist.Items[i].SynMemo1.Text);
+  end else if s = 'Utf8' then begin
+    function_unit.editlist.Items[i].lines_tmp.Text := (function_unit.editlist.Items[i].SynMemo1.Text);
+  end else if s = 'Utf16' then begin
+    function_unit.editlist.Items[i].lines_tmp.Text := Utf8toUtf16(function_unit.editlist.Items[i].SynMemo1.Text);
+  end;
   function_unit.editlist.Items[i].lines_tmp.SaveToFile(
     function_unit.editlist.Items[i].filename_path
   );
+
 end;
 
 function Tfunction_unit.saveas(i:integer):boolean;
@@ -292,6 +348,8 @@ begin
     dec(i);
   end;
 end;
+
+
 
 function Tfunction_unit.chengtab(i1:integer):boolean;
   {function edittypeset(s:string):boolean;
