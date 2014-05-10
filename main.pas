@@ -162,6 +162,8 @@ type
     TabControl1: TTabControl;
     ToolBar2: TToolBar;
     undo: TMenuItem;
+    procedure cpyClick(Sender: TObject);
+    procedure cutClick(Sender: TObject);
     procedure FormChangeBounds(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Menu_AllCloseClick(Sender: TObject);
@@ -169,6 +171,9 @@ type
     procedure Menu_All_SaveClick(Sender: TObject);
     procedure Menu_AnsiClick(Sender: TObject);
     procedure Menu_CloseClick(Sender: TObject);
+    procedure Menu_Insert_CalacClick(Sender: TObject);
+    procedure Menu_Insert_DayClick(Sender: TObject);
+    procedure Menu_Insert_TimeClick(Sender: TObject);
     procedure Menu_NewClick(Sender: TObject);
     procedure Menu_OpenClick(Sender: TObject);
     procedure Menu_ReOpenClick(Sender: TObject);
@@ -176,9 +181,13 @@ type
     procedure menu_saveClick(Sender: TObject);
     procedure Menu_Utf16Click(Sender: TObject);
     procedure Menu_UTF8_AnsiClick(Sender: TObject);
+    procedure peastClick(Sender: TObject);
+    procedure redoClick(Sender: TObject);
+    procedure selctallClick(Sender: TObject);
     procedure TabControl1Change(Sender: TObject);
     procedure TabControl1ChangeBounds(Sender: TObject);
     procedure TabControl1Changing(Sender: TObject; var AllowChange: Boolean);
+    procedure undoClick(Sender: TObject);
    private
     { private declarations }
 
@@ -241,6 +250,21 @@ begin
   function_unit.set_char(mainform.TabControl1.TabIndex,'Utf8');
 end;
 
+procedure TMainForm.peastClick(Sender: TObject);
+begin
+  function_unit.edit_contlorl('past',mainform.TabControl1.TabIndex);
+end;
+
+procedure TMainForm.redoClick(Sender: TObject);
+begin
+  function_unit.edit_contlorl('redo',mainform.TabControl1.TabIndex);
+end;
+
+procedure TMainForm.selctallClick(Sender: TObject);
+begin
+  function_unit.edit_contlorl('all',mainform.TabControl1.TabIndex);
+end;
+
 procedure TMainForm.TabControl1Change(Sender: TObject);
 begin
   function_unit.changtabset(MainForm.TabControl1.TabIndex);
@@ -258,11 +282,26 @@ begin
 
 end;
 
+procedure TMainForm.undoClick(Sender: TObject);
+begin
+  function_unit.edit_contlorl('undo',mainform.TabControl1.TabIndex);
+end;
+
 
 
 procedure TMainForm.FormChangeBounds(Sender: TObject);
 begin
  function_unit.chingSize(mainform.TabControl1.TabIndex);
+end;
+
+procedure TMainForm.cutClick(Sender: TObject);
+begin
+  function_unit.edit_contlorl('cut',mainform.TabControl1.TabIndex);
+end;
+
+procedure TMainForm.cpyClick(Sender: TObject);
+begin
+  function_unit.edit_contlorl('copy',mainform.TabControl1.TabIndex);
 end;
 
 procedure TMainForm.FormCreate(Sender: TObject);
@@ -290,6 +329,21 @@ var
   i:integer;
 begin
   function_unit.closeTab( mainform.TabControl1.TabIndex );
+end;
+
+procedure TMainForm.Menu_Insert_CalacClick(Sender: TObject);
+begin
+  function_unit.edit_contlorl('calac',mainform.TabControl1.TabIndex);
+end;
+
+procedure TMainForm.Menu_Insert_DayClick(Sender: TObject);
+begin
+  function_unit.edit_contlorl('day',mainform.TabControl1.TabIndex);
+end;
+
+procedure TMainForm.Menu_Insert_TimeClick(Sender: TObject);
+begin
+  function_unit.edit_contlorl('time',mainform.TabControl1.TabIndex);
 end;
 
 end.

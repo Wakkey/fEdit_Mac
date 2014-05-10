@@ -1,7 +1,7 @@
 object MainForm: TMainForm
-  Left = 390
+  Left = 806
   Height = 513
-  Top = 176
+  Top = 181
   Width = 607
   Caption = 'MainForm'
   ClientHeight = 513
@@ -112,12 +112,15 @@ object MainForm: TMainForm
       end
       object Menu_Ansi: TMenuItem
         Caption = 'Ansi'
+        OnClick = Menu_AnsiClick
       end
       object Menu_UTF8_Ansi: TMenuItem
         Caption = 'UTF8'
+        OnClick = Menu_UTF8_AnsiClick
       end
       object Menu_Utf16: TMenuItem
         Caption = 'UTF16'
+        OnClick = Menu_Utf16Click
       end
       object MenuItem86: TMenuItem
         Caption = '-'
@@ -141,33 +144,41 @@ object MainForm: TMainForm
       Caption = '編集'
       object undo: TMenuItem
         Caption = '元に戻す'
+        OnClick = undoClick
       end
       object redo: TMenuItem
         Caption = 'やり直し'
+        OnClick = redoClick
       end
       object MenuItem14: TMenuItem
         Caption = '-'
       end
       object cut: TMenuItem
         Caption = '切り取り'
+        OnClick = cutClick
       end
       object cpy: TMenuItem
         Caption = 'コピー'
+        OnClick = cpyClick
       end
       object peast: TMenuItem
         Caption = '貼り付け'
+        OnClick = peastClick
       end
       object selctall: TMenuItem
         Caption = '全て選択'
+        OnClick = selctallClick
       end
       object MenuItem18: TMenuItem
         Caption = '-'
       end
       object Menu_Insert_Day: TMenuItem
         Caption = '日付挿入'
+        OnClick = Menu_Insert_DayClick
       end
       object Menu_Insert_Time: TMenuItem
         Caption = '現在時刻挿入'
+        OnClick = Menu_Insert_TimeClick
       end
       object Menu_Insert_Calac: TMenuItem
         Caption = '電卓'

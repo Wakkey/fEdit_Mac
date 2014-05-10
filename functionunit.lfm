@@ -1,7 +1,7 @@
 object function_unit: Tfunction_unit
-  Left = 294
+  Left = 263
   Height = 239
-  Top = 390
+  Top = 326
   Width = 322
   Caption = 'function_unit'
   OnCreate = FormCreate

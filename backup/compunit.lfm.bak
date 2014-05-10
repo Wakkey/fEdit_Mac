@@ -6,6 +6,7 @@ object comp_unit: Tcomp_unit
   Caption = 'comp_unit'
   LCLVersion = '1.2.2.0'
   object OpenDialog1: TOpenDialog
+    Options = [ofAllowMultiSelect, ofEnableSizing, ofViewDetail]
     left = 12
     top = 11
   end

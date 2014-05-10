@@ -5,13 +5,15 @@ unit edit;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, SynMemo, Forms, Controls, Graphics, Dialogs;
+  Classes, SysUtils, FileUtil, SynMemo, Forms, Controls, Graphics, Dialogs,
+  StdCtrls;
 
 type
 
   { Teditfrm }
 
   Teditfrm = class(TForm)
+    Memo1: TMemo;
     SynMemo1: TSynMemo;
     procedure FormCreate(Sender: TObject);
   private

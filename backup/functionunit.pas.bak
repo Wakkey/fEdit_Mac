@@ -31,12 +31,16 @@ type
     function window_off(i:integer):boolean;
     function newwindow(count:integer):boolean;
     function newedit(i:integer):boolean;
+
     function filesOpen:boolean;
     function open(i:integer;s:string):boolean;
     function save(i:integer):boolean;
     function saveas(i:integer):boolean;
     function AllSave:boolean;
     function AllSaveAs:boolean;
+
+    function edit_contlorl(s:String;tab:integer):boolean;
+
     function chingSize(i:integer):boolean;
     function frmpsnset(count:integer):boolean;
     function resizedocwindow(count:integer):boolean;
@@ -211,18 +215,17 @@ end;
 
 function Tfunction_unit.open(i:integer;s:string):boolean;
 begin
-  function_unit.editlist[ i ].SynMemo1.Lines.LoadFromFile( s );
+  function_unit.editlist[ i ].lines_tmp.LoadFromFile( s );
   if function_unit.editlist.Items[i].charset = '' then begin
     function_unit.editlist.Items[i].charset := function_unit.charset_new;
   end;
-  {if function_unit.editlist.Items[i].charset = 'Ansi' then begin
-    function_unit.editlist.Items[ i ].SynMemo1.Lines.Text:= (function_unit.editlist[ i ].lines_tmp.Text);
+  if function_unit.editlist.Items[i].charset = 'Ansi' then begin
+    function_unit.editlist.Items[ i ].SynMemo1.Lines.Text:= utf8toansi(function_unit.editlist[ i ].lines_tmp.Text);
   end else if function_unit.editlist.Items[i].charset = 'Utf8' then begin
     function_unit.editlist.Items[ i ].SynMemo1.Lines.Text:= (function_unit.editlist[ i ].lines_tmp.Text);
   end else if function_unit.editlist.Items[i].charset = 'Utf16' then begin
     function_unit.editlist.Items[ i ].SynMemo1.Lines.Text:= Utf8toUtf16(function_unit.editlist[ i ].lines_tmp.Text);
-  end;}
-  function_unit.editlist[ i ].SynMemo1.Lines.Text:= utf8Toansi(function_unit.editlist[ i ].SynMemo1.Lines.Text);
+  end;
 end;
 
 function Tfunction_unit.save(i:integer):boolean;
@@ -266,6 +269,114 @@ var
 begin
   for i :=0 to function_unit.editlist.Count -1 do begin
     function_unit.saveas(i);
+  end;
+end;
+
+function Tfunction_unit.edit_contlorl(s:String;tab:integer):boolean;
+var
+  i,i1:integer;
+begin
+  if s = 'undo' then begin
+    i := 0;
+  end else if s = 'redo' then begin
+    i := 1;
+  end else if s = 'cut' then begin
+    i := 2;
+  end else if s = 'copy' then begin
+    i := 3;
+  end else if s = 'past' then begin
+    i := 4;
+  end else if s = 'all' then begin
+    i := 5;
+  end else if s = 'day' then begin
+    i := 6;
+  end else if s = 'time' then begin
+    i := 7;
+  end else if s = 'calac' then begin
+    i := 8;
+  end else
+   i := 99;
+  with function_unit.editlist.Items[tab] do begin
+    case i of
+      0:begin
+        if memo1.Visible then begin
+          memo1.Undo;
+        end else begin
+          SynMemo1.Undo;
+        end;
+      end;
+      1:begin
+        if memo1.Visible then begin
+          memo1.Undo;
+        end else begin
+          SynMemo1.Redo;
+        end;
+      end;
+      2:begin
+        if memo1.Visible then begin
+          memo1.CutToClipboard;
+        end else begin
+          SynMemo1.CutToClipboard;
+        end;
+      end;
+      3:begin
+        if memo1.Visible then begin
+          memo1.CopyToClipboard;
+        end else begin
+          SynMemo1.CopyToClipboard;
+        end;
+      end;
+      4:begin
+        if memo1.Visible then begin
+          memo1.PasteFromClipboard;
+        end else begin
+          SynMemo1.PasteFromClipboard;
+        end;
+      end;
+      5:begin
+        if memo1.Visible then begin
+          memo1.SelectAll;
+        end else begin
+          SynMemo1.SelectAll;
+        end;
+      end;
+      6:begin
+        if memo1.Visible then begin
+          i1 := Memo1.CaretPos.Y -1;
+          Memo1.Lines.Insert(i1,datetostr(now));
+        end else begin
+          i1 := SynMemo1.CaretY -1;
+          SynMemo1.Lines.Insert(i1,datetostr(now));
+        end;
+      end;
+      7:begin
+        if memo1.Visible then begin
+          i1 := Memo1.CaretPos.Y -1;
+            //SendMessage(editfrm[i].Memo.Handle, EM_LINEFROMCHAR, editfrm[i].Memo.SelStart, 0);
+          Memo1.Lines.Insert(i1,timetostr(now));
+        end else begin
+          i1 := SynMemo1.CaretY -1;
+          SynMemo1.Lines.Insert(i1,timetostr(now));
+        end;
+      end;
+
+      8:begin
+        if not comp_unit.CalculatorDialog1.Execute then
+          exit;
+          if memo1.Visible then begin
+            i1 := Memo1.CaretPos.Y -1;
+            //SendMessage(editfrm[i].Memo.Handle, EM_LINEFROMCHAR, editfrm[i].Memo.SelStart, 0);
+            Memo1.Lines.Insert(i1,floattostr(comp_unit.CalculatorDialog1.Value));
+
+          end else begin
+            i1 := SynMemo1.CaretY -1;
+            SynMemo1.Lines.Insert(i1,floattostr(comp_unit.CalculatorDialog1.Value));
+          end;
+      end;
+      99:begin
+        showmessage('this command is not faund ' + '"'+ s +'"');
+      end;
+    end;
   end;
 end;
 

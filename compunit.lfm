@@ -1,7 +1,7 @@
 object comp_unit: Tcomp_unit
-  Left = 418
+  Left = 632
   Height = 334
-  Top = 239
+  Top = 152
   Width = 533
   Caption = 'comp_unit'
   LCLVersion = '1.2.2.0'
@@ -50,7 +50,7 @@ object comp_unit: Tcomp_unit
   object CalendarDialog1: TCalendarDialog
     Date = 41761
     OKCaption = 'OK(&O)'
-    CancelCaption = 'ã‚­ãƒ£ãƒ³ã‚»ãƒ«'
+    CancelCaption = 'Ã£Â‚Â­Ã£ÂƒÂ£Ã£ÂƒÂ³Ã£Â‚Â»Ã£ÂƒÂ«'
     left = 128
     top = 11
   end
@@ -350,7 +350,7 @@ object comp_unit: Tcomp_unit
     Comments = []
     DetectPreprocessor = False
     IdentifierAttri.FrameEdges = sfeAround
-    IdentifierChars = '!"#$%&''()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~€‚ƒ„…†‡ˆ‰Š‹Œ‘’“”•–—˜™š›œŸ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖ×ØÙÚÛÜİŞßàáâãäåæçèéêëìíîïğñòóôõö÷øùúûüışÿ'
+    IdentifierChars = '!"#$%&''()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~€‚ƒ„…†‡ˆ‰Š‹Œ‘’“”•–—˜™š›œŸ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÂÃ'
     KeyAttri.FrameEdges = sfeAround
     ConstantAttri.FrameEdges = sfeAround
     ObjectAttri.FrameEdges = sfeAround
