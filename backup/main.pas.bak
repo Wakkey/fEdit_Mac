@@ -165,14 +165,18 @@ type
     procedure cpyClick(Sender: TObject);
     procedure cutClick(Sender: TObject);
     procedure FormChangeBounds(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: boolean);
     procedure FormCreate(Sender: TObject);
     procedure Menu_AllCloseClick(Sender: TObject);
     procedure Menu_AllSaveAsClick(Sender: TObject);
     procedure Menu_All_SaveClick(Sender: TObject);
     procedure Menu_AnsiClick(Sender: TObject);
     procedure Menu_CloseClick(Sender: TObject);
+    procedure Menu_FIndsClick(Sender: TObject);
+    procedure Menu_Insert_CalacClick(Sender: TObject);
     procedure Menu_Insert_DayClick(Sender: TObject);
     procedure Menu_Insert_TimeClick(Sender: TObject);
+    procedure Menu_MemoModeClick(Sender: TObject);
     procedure Menu_NewClick(Sender: TObject);
     procedure Menu_OpenClick(Sender: TObject);
     procedure Menu_ReOpenClick(Sender: TObject);
@@ -200,7 +204,7 @@ var
 
 implementation
 
-uses edit,functionunit;
+uses edit,functionunit,find;
 
 { TMainForm }
 {$R *.lfm}
@@ -293,6 +297,15 @@ begin
  function_unit.chingSize(mainform.TabControl1.TabIndex);
 end;
 
+procedure TMainForm.FormCloseQuery(Sender: TObject; var CanClose: boolean);
+var
+  i:integer;
+begin
+  for i := 0 to mainform.TabControl1.Tabs.Count -1 do begin
+    function_unit.editlist.Items[i].Memo1.Visible:= false;
+  end;
+end;
+
 procedure TMainForm.cutClick(Sender: TObject);
 begin
   function_unit.edit_contlorl('cut',mainform.TabControl1.TabIndex);
@@ -330,14 +343,37 @@ begin
   function_unit.closeTab( mainform.TabControl1.TabIndex );
 end;
 
+procedure TMainForm.Menu_FIndsClick(Sender: TObject);
+begin
+  find_form.Show;
+end;
+
+procedure TMainForm.Menu_Insert_CalacClick(Sender: TObject);
+begin
+  function_unit.edit_contlorl('calac',mainform.TabControl1.TabIndex);
+end;
+
 procedure TMainForm.Menu_Insert_DayClick(Sender: TObject);
 begin
-
+  function_unit.edit_contlorl('day',mainform.TabControl1.TabIndex);
 end;
 
 procedure TMainForm.Menu_Insert_TimeClick(Sender: TObject);
 begin
+  function_unit.edit_contlorl('time',mainform.TabControl1.TabIndex);
+end;
 
+procedure TMainForm.Menu_MemoModeClick(Sender: TObject);
+begin
+  with function_unit.editlist.Items[mainform.TabControl1.TabIndex] do begin
+    if not memo1.Visible then begin
+      memo1.Text := synmemo1.Text;
+    end else begin
+      synmemo1.Text := memo1.Text;
+    end;
+    Memo1.Visible:= not memo1.Visible;
+    synmemo1.Visible:= not synmemo1.Visible;
+  end;
 end;
 
 end.

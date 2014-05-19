@@ -1,17 +1,17 @@
 object editfrm: Teditfrm
   Left = 600
-  Height = 240
-  Top = 195
+  Height = 242
+  Top = 193
   Width = 320
   Caption = 'editfrm'
-  ClientHeight = 240
+  ClientHeight = 242
   ClientWidth = 320
   OnCreate = FormCreate
   LCLVersion = '1.2.2.0'
   inline SynMemo1: TSynMemo
     Cursor = crIBeam
     Left = 0
-    Height = 240
+    Height = 242
     Top = 0
     Width = 320
     Align = alClient
@@ -499,10 +499,11 @@ object editfrm: Teditfrm
   end
   object Memo1: TMemo
     Left = 0
-    Height = 240
+    Height = 242
     Top = 0
     Width = 320
     Align = alClient
+    ScrollBars = ssAutoBoth
     TabOrder = 1
     TabStop = False
     Visible = False

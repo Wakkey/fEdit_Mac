@@ -7,7 +7,7 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, edit, Main, functionunit, compunit, printer4lazarus;
+  Forms, edit, Main, functionunit, compunit, find, printer4lazarus, lazcontrols;
 
 {$R *.res}
 
@@ -17,6 +17,7 @@ begin
   Application.CreateForm(TMainForm, MainForm);
   Application.CreateForm(Tfunction_unit, function_unit);
   Application.CreateForm(Tcomp_unit, comp_unit);
+  Application.CreateForm(Tfind_form, find_form);
   Application.Run;
 end.
 

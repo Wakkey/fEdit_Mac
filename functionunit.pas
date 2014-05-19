@@ -5,7 +5,8 @@ unit functionunit;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs,edit;
+  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
+  edit;
 
 type
    TeditList = class(TList)
@@ -27,6 +28,7 @@ type
     editlist:Teditlist;
     TitleName:string;
     charset_new:string;
+    Listset:array[0..255] of TStringList;
     function set_char(i:integer;s:string):string;
     function window_off(i:integer):boolean;
     function newwindow(count:integer):boolean;
@@ -40,6 +42,12 @@ type
     function AllSaveAs:boolean;
 
     function edit_contlorl(s:String;tab:integer):boolean;
+
+    function findtext(fText:string;setText,get_text:TStringList;setfind:integer):boolean;
+    function find1page(i: integer):boolean;
+    function findallpage: boolean;
+    function TXTReplace:boolean;
+    function selselect(i:integer): boolean;
 
     function chingSize(i:integer):boolean;
     function frmpsnset(count:integer):boolean;
@@ -60,7 +68,7 @@ var
 
 implementation
 
-uses Main,compunit;
+uses Main,compunit,find;
 
 {$R *.lfm}
 
@@ -104,6 +112,7 @@ procedure Tfunction_unit.FormCreate(Sender: TObject);
 begin
   editlist := TeditList.Create;
   editlist.clear;
+  function_unit.charset_new:= 'Utf8';
   TitleName := 'fEdit 0.10 ';
 end;
 
@@ -233,17 +242,26 @@ var
   s:string;
 begin
   s := function_unit.set_char(i,'?');
-  if s = 'Ansi' then begin
-    function_unit.editlist.Items[i].lines_tmp.Text := Utf8toAnsi(function_unit.editlist.Items[i].SynMemo1.Text);
-  end else if s = 'Utf8' then begin
-    function_unit.editlist.Items[i].lines_tmp.Text := (function_unit.editlist.Items[i].SynMemo1.Text);
-  end else if s = 'Utf16' then begin
-    function_unit.editlist.Items[i].lines_tmp.Text := Utf8toUtf16(function_unit.editlist.Items[i].SynMemo1.Text);
+  with function_unit.editlist.Items[i] do begin
+    if not memo1.Visible then begin
+      if s = 'Ansi' then begin
+        lines_tmp.Text := Utf8toAnsi(SynMemo1.Text);
+      end else if s = 'Utf8' then begin
+        lines_tmp.Text := (SynMemo1.Text);
+      end else if s = 'Utf16' then begin
+        lines_tmp.Text := Utf8toUtf16(SynMemo1.Text);
+      end;
+    end else begin
+      if s = 'Ansi' then begin
+        lines_tmp.Text := Utf8toAnsi(Memo1.Text);
+      end else if s = 'Utf8' then begin
+        lines_tmp.Text := (Memo1.Text);
+      end else if s = 'Utf16' then begin
+        lines_tmp.Text := Utf8toUtf16(Memo1.Text);
+      end;
+    end;
+    lines_tmp.SaveToFile(filename_path);
   end;
-  function_unit.editlist.Items[i].lines_tmp.SaveToFile(
-    function_unit.editlist.Items[i].filename_path
-  );
-
 end;
 
 function Tfunction_unit.saveas(i:integer):boolean;
@@ -378,6 +396,188 @@ begin
       99:begin
         showmessage('this command is not faund ' + '"'+ s +'"');
       end;
+    end;
+  end;
+end;
+
+function Tfunction_unit.find1page(i: integer): boolean;
+var
+  s,s1:TstringList;
+  setfile0,setfile1,setfile2:string;
+  i1:integer;
+begin
+  s := TstringList.Create;
+  s1 := TstringList.Create;
+  s.Clear;
+  s1.Clear;
+      MainForm.TabControl1.TabIndex:= i;
+      with function_unit.editlist.Items[i] do begin
+        if not Memo1.Visible then begin
+          SynMemo1.SelEnd:= length(SynMemo1.Lines.Text);
+          s1.Text:= SynMemo1.SelText;
+          SynMemo1.SelEnd := SynMemo1.SelStart;
+        end else begin
+          Memo1.SelLength := Memo1.SelStart - length(Memo1.Lines.Text);
+          s1.Text:= Memo1.SelText;
+        end;
+
+        if not find_form.ChekChar.Checked then begin
+          try
+            if not Memo1.Visible then begin
+              s1.Text:= LowerCase(SynMemo1.Lines.Text);
+            end else begin
+              s1.Text:= LowerCase(Memo1.Lines.Text);
+            end;
+            find_form.FIndTextAlia.Text := LowerCase(find_form.FIndTextAlia.Text);
+          finally
+          end;
+        end else begin
+        try
+          if not Memo1.Visible then begin
+            s1.Text:= (SynMemo1.Lines.Text);
+          end else begin
+            s1.Text:= (Memo1.Lines.Text);
+          end;
+          find_form.FIndTextAlia.Text := (find_form.FIndTextAlia.Text);
+        finally
+        end;
+      end;
+    end;
+       findtext(find_form.FIndTextAlia.Text,s1,s,0);
+      if s.Text <> '' then begin
+        find_form.listset(i,s);
+        find_form.ListBox2.Items.Add(MainForm.TabControl1.Tabs[i]);
+        find_form.listallload(i,find_form.FindList);
+        //find_form.ListBox1.Items := find_form.FindList;  //DebugCode
+        for i1 := 0 to FInd_form.FindList.count -1 do begin
+          find_form.ListBox1.Items.Add(inttostr(i1));
+        end;
+        find_form.Memo1.Lines.Add(IntToStr(i +1));
+      end;
+
+    s.Free;
+    s1.Free;
+    if find_form.ListBox1.Items.Count > 0 then
+      find_form.ListBox1.ItemIndex:= -1;
+end;
+
+function Tfunction_unit.findtext(fText:string;setText,get_text:TStringList;setfind:integer):boolean;
+var
+  s:Tstringlist;
+  s1:string;
+  i,i1,i2,i4:integer;
+  memo:Tmemo;
+  function findword:boolean;
+  var
+    i3:integer;
+  begin
+    i := ansipos(ftext,s[i1]);
+    if i = 0 then begin
+      findword := false
+    end
+    else begin
+      i4 := 0;
+      for i3 := 0 to i1 -1 do begin
+        i4 := i4 + length(s[i3]) + 1;//Windows=2; MacOSX+1;
+      end;
+      i4 := i4 + i;
+      get_text.Add(inttostr(i4));
+      findword := true;
+    end;
+  end;
+begin
+  //findtext.Free;
+  s:=TStringlist.Create;
+  s.Clear;
+  memo:=Tmemo.Create(MainForm);
+  memo.Visible := false;
+  memo.Parent := MainForm;
+  //function_unit.Show;
+  memo.Text := settext.Text;
+  s.Text:=settext.Text;
+  i := -1;
+  i1 := 0;
+  for i1 := 0 to s.Count -1 do begin;
+    if findword then begin
+      s1 := s[i1];
+      for i2 := i to length(s1) do begin
+        s1[i] := ' ';
+      end;
+      s[i1] := s1;
+    end;
+  end;
+  memo.Free;
+  s.Free;
+end;
+
+function Tfunction_unit.findallpage: boolean;
+var
+  i:integer;
+begin
+  find_form.Memo1.Clear;
+  for i := 0 to MainForm.TabControl1.Tabs.Count -1 do begin
+    find1page(i);
+    function_unit.Listset[i].Text:= find_form.FindList.Text;
+    //chekfinds;
+  end;
+  find_form.ListBox2.ItemIndex:= find_form.ListBox2.Items.Count -1;
+
+end;
+
+function Tfunction_unit.TXTReplace: boolean;
+var
+  i:integer;
+  msg:string;
+  i1:integer;
+begin
+    i1 := MainForm.TabControl1.TabIndex;
+  msg  := '文字列を置き換えます' + chr($d) + chr($a) + 'よろしいですか？';
+  while 0 <> find_form.ListBox1.Items.Count do begin
+    //find_form.listbox1.ItemIndex := i;
+    //function_unit.selselect;
+    if messagedlg(msg, mtinformation, [mbOk,mbNo,mbCancel], 0) = mrok then begin
+      with function_unit.editlist.Items[i1] do begin
+        if not memo1.Visible then begin
+          synmemo1.SelStart:= strtoint(find_form.FindList[find_form.selectFind]);
+          synmemo1.SelEnd:= synmemo1.SelStart + length(find_form.FIndTextAlia.Text);
+          SynMemo1.SelText:= find_form.RplaceTextAlia.Text;
+         end else begin
+           memo1.SelStart:= strtoint(find_form.FindList[find_form.selectFind]) -1;
+           memo1.SelLength:= length(find_form.FIndTextAlia.Text);
+           Memo1.SelText:= find_form.RplaceTextAlia.Text;
+          end;
+        end;
+
+        find_form.ListBox2.Items.Clear;
+        find_form.ListBox1.ItemIndex := -1;
+        find_form.ListBox1.Items.Clear;
+        find_form.FindList.Clear;
+        function_unit.Listset[i1].Clear;
+        function_unit.find1page(i1);
+      end else if  messagedlg(msg, mtinformation, [mbOk,mbNo,mbCancel], 0) = 1 then begin
+         inc(find_form.selectFind);
+      end else if messagedlg(msg, mtinformation, [mbOk,mbNo,mbCancel], 0) = 2 then begin
+        break;
+      end;
+
+
+  end;
+end;
+
+function Tfunction_unit.selselect(i:integer): boolean;
+var
+  findpos:integer;
+begin
+  //MainForm.findpage := StrToInt(color_form.Memo1.Lines[tabset1.TabIndex]);
+  findpos := StrToInt(find_form.FindList[find_form.listbox1.ItemIndex]);
+  with function_unit.editlist.Items[i] do begin
+    if not memo1.Visible then begin
+      SynMemo1.SelStart := findpos;
+      SynMemo1.selend := findpos + length(find_form.FIndTextAlia.Text);
+    end else begin
+
+      memo1.SelStart := findpos -1;
+      memo1.SelLength := length(find_form.FIndTextAlia.Text);
     end;
   end;
 end;
