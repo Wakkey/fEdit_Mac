@@ -23,6 +23,7 @@ type
     lines_tmp:TStringList;
     filename_path:string;
     charset:string;
+    editCaretY,editCaretX:integer;
   end;
 
 var

@@ -3,7 +3,7 @@
   <ProjectSession>
     <Version Value="9"/>
     <BuildModes Active="Default"/>
-    <Units Count="6">
+    <Units Count="7">
       <Unit0>
         <Filename Value="fEdit_Mac.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -20,7 +20,7 @@
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
         <TopLine Value="7"/>
-        <CursorPos X="108" Y="19"/>
+        <CursorPos X="26" Y="26"/>
         <UsageCount Value="271"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -47,10 +47,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="functionunit"/>
-        <EditorIndex Value="3"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="4"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="536"/>
-        <CursorPos X="79" Y="541"/>
+        <TopLine Value="746"/>
+        <CursorPos X="18" Y="777"/>
         <UsageCount Value="271"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -62,7 +63,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="compunit"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="5"/>
         <WindowIndex Value="0"/>
         <TopLine Value="48"/>
         <CursorPos X="7" Y="55"/>
@@ -77,15 +78,29 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="find"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="247"/>
-        <CursorPos X="46" Y="260"/>
-        <UsageCount Value="197"/>
+        <TopLine Value="248"/>
+        <CursorPos X="11" Y="260"/>
+        <UsageCount Value="198"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit5>
+      <Unit6>
+        <Filename Value="repracemacro.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="reprace_unit"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="repraceMacro"/>
+        <EditorIndex Value="3"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="52"/>
+        <CursorPos X="32" Y="69"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit6>
     </Units>
     <General>
       <ActiveWindowIndexAtStart Value="0"/>
@@ -93,123 +108,123 @@
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="find.pas"/>
-        <Caret Line="173" Column="3" TopLine="171"/>
+        <Caret Line="218" Column="27" TopLine="174"/>
       </Position1>
       <Position2>
         <Filename Value="find.pas"/>
-        <Caret Line="116" Column="49" TopLine="102"/>
+        <Caret Line="148" Column="5" TopLine="131"/>
       </Position2>
       <Position3>
         <Filename Value="find.pas"/>
-        <Caret Line="182" Column="24" TopLine="173"/>
+        <Caret Line="234" Column="3" TopLine="232"/>
       </Position3>
       <Position4>
         <Filename Value="functionunit.pas"/>
-        <Caret Line="48" Column="25" TopLine="40"/>
+        <Caret Line="49" Column="24" TopLine="41"/>
       </Position4>
       <Position5>
-        <Filename Value="find.pas"/>
-        <Caret Line="182" Column="24" TopLine="185"/>
+        <Filename Value="functionunit.pas"/>
+        <Caret Line="542" Column="59" TopLine="525"/>
       </Position5>
       <Position6>
-        <Filename Value="find.pas"/>
-        <Caret Line="134" Column="41" TopLine="106"/>
+        <Filename Value="main.pas"/>
+        <Caret Line="305" Column="3" TopLine="300"/>
       </Position6>
       <Position7>
-        <Filename Value="find.pas"/>
-        <Caret Line="201" Column="3" TopLine="211"/>
+        <Filename Value="main.pas"/>
+        <Caret Line="372" Column="36" TopLine="355"/>
       </Position7>
       <Position8>
-        <Filename Value="find.pas"/>
-        <Caret Line="62" Column="25" TopLine="53"/>
+        <Filename Value="functionunit.pas"/>
+        <Caret Line="575" Column="32" TopLine="563"/>
       </Position8>
       <Position9>
-        <Filename Value="find.pas"/>
-        <Caret Line="138" Column="32" TopLine="134"/>
+        <Filename Value="functionunit.pas"/>
+        <Caret Line="420" Column="16" TopLine="409"/>
       </Position9>
       <Position10>
         <Filename Value="find.pas"/>
-        <Caret Line="217" Column="30" TopLine="205"/>
+        <Caret Line="59" Column="24" TopLine="52"/>
       </Position10>
       <Position11>
         <Filename Value="find.pas"/>
-        <Caret Line="218" Column="25" TopLine="207"/>
+        <Caret Line="351" Column="35" TopLine="345"/>
       </Position11>
       <Position12>
         <Filename Value="find.pas"/>
-        <Caret Line="214" Column="72" TopLine="207"/>
+        <Caret Line="245" Column="3" TopLine="241"/>
       </Position12>
       <Position13>
         <Filename Value="find.pas"/>
-        <Caret Line="218" Column="27" TopLine="174"/>
+        <Caret Line="48" Column="32" TopLine="39"/>
       </Position13>
       <Position14>
         <Filename Value="find.pas"/>
-        <Caret Line="148" Column="5" TopLine="131"/>
+        <Caret Line="250" Column="32" TopLine="233"/>
       </Position14>
       <Position15>
         <Filename Value="find.pas"/>
-        <Caret Line="234" Column="3" TopLine="232"/>
+        <Caret Line="251" Column="5" TopLine="233"/>
       </Position15>
       <Position16>
-        <Filename Value="functionunit.pas"/>
-        <Caret Line="49" Column="24" TopLine="41"/>
+        <Filename Value="find.pas"/>
+        <Caret Line="258" Column="24" TopLine="245"/>
       </Position16>
       <Position17>
-        <Filename Value="functionunit.pas"/>
-        <Caret Line="542" Column="59" TopLine="525"/>
+        <Filename Value="find.pas"/>
+        <Caret Line="171" Column="13" TopLine="161"/>
       </Position17>
       <Position18>
-        <Filename Value="main.pas"/>
-        <Caret Line="305" Column="3" TopLine="300"/>
+        <Filename Value="find.pas"/>
+        <Caret Line="174" Column="27" TopLine="165"/>
       </Position18>
       <Position19>
-        <Filename Value="main.pas"/>
-        <Caret Line="372" Column="36" TopLine="355"/>
+        <Filename Value="find.pas"/>
+        <Caret Line="260" Column="46" TopLine="247"/>
       </Position19>
       <Position20>
-        <Filename Value="functionunit.pas"/>
-        <Caret Line="575" Column="32" TopLine="563"/>
+        <Filename Value="repracemacro.pas"/>
+        <Caret Line="1" Column="1" TopLine="1"/>
       </Position20>
       <Position21>
         <Filename Value="functionunit.pas"/>
-        <Caret Line="420" Column="16" TopLine="409"/>
+        <Caret Line="682" Column="13" TopLine="623"/>
       </Position21>
       <Position22>
-        <Filename Value="find.pas"/>
-        <Caret Line="59" Column="24" TopLine="52"/>
+        <Filename Value="functionunit.pas"/>
+        <Caret Line="715" Column="1" TopLine="695"/>
       </Position22>
       <Position23>
-        <Filename Value="find.pas"/>
-        <Caret Line="351" Column="35" TopLine="345"/>
+        <Filename Value="functionunit.pas"/>
+        <Caret Line="593" Column="39" TopLine="583"/>
       </Position23>
       <Position24>
-        <Filename Value="find.pas"/>
-        <Caret Line="245" Column="3" TopLine="241"/>
+        <Filename Value="functionunit.pas"/>
+        <Caret Line="621" Column="51" TopLine="610"/>
       </Position24>
       <Position25>
-        <Filename Value="find.pas"/>
-        <Caret Line="48" Column="32" TopLine="39"/>
+        <Filename Value="functionunit.pas"/>
+        <Caret Line="639" Column="31" TopLine="631"/>
       </Position25>
       <Position26>
-        <Filename Value="find.pas"/>
-        <Caret Line="250" Column="32" TopLine="233"/>
+        <Filename Value="functionunit.pas"/>
+        <Caret Line="695" Column="48" TopLine="685"/>
       </Position26>
       <Position27>
-        <Filename Value="find.pas"/>
-        <Caret Line="251" Column="5" TopLine="233"/>
+        <Filename Value="functionunit.pas"/>
+        <Caret Line="730" Column="37" TopLine="719"/>
       </Position27>
       <Position28>
-        <Filename Value="find.pas"/>
-        <Caret Line="258" Column="24" TopLine="245"/>
+        <Filename Value="functionunit.pas"/>
+        <Caret Line="31" Column="24" TopLine="25"/>
       </Position28>
       <Position29>
-        <Filename Value="find.pas"/>
-        <Caret Line="171" Column="13" TopLine="161"/>
+        <Filename Value="functionunit.pas"/>
+        <Caret Line="30" Column="24" TopLine="29"/>
       </Position29>
       <Position30>
-        <Filename Value="find.pas"/>
-        <Caret Line="174" Column="27" TopLine="165"/>
+        <Filename Value="functionunit.pas"/>
+        <Caret Line="787" Column="9" TopLine="771"/>
       </Position30>
     </JumpHistory>
   </ProjectSession>

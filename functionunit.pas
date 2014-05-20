@@ -61,6 +61,8 @@ type
 
     function chengtab(i1:integer):boolean;
 
+    function reprace_macro(s,find,reprace:string;count:integer):boolean;
+
   end;
 
 var
@@ -582,6 +584,238 @@ begin
   end;
 end;
 
+function TextCheng(i,x,y:integer;find1,find2,reprace1,reprace2:string):boolean;
+var
+  st,st1,st2,st3,st4:TStringList;
+  i1,i2,i3,i4:integer;
+  s,s1,s2:string;
+begin
+  with function_unit.editlist.Items[i].synmemo1 do begin
+    //y := SendMessage(Handle, EM_LINEFROMCHAR, SelStart, 0);
+    //x := SelStart - SendMessage(Handle, EM_LINEINDEX, y, 0);
+    //form1.caption := inttostr(y + 1)+ '行' + inttostr(x)+ '列';
+
+    //if key = 13 then begin
+      {if Lines.Text = '' then begin
+        Lines[y] :=  Lines[y] + 'chr(13) + ';
+        exit;
+      end;}
+      {if Lines[y -1] = 'chr(13) + ' then begin
+        Lines[y] := 'chr(13) ';
+        exit;
+      end;}
+      if Lines[y] <> '' then begin
+       // if 0 > (y -1) then begin
+          st := tstringlist.Create;
+          st.Clear;
+          st1 := tstringlist.Create;
+          st1.Clear;
+          st2 := TStringlist.Create;
+          st2.Clear;
+          st3 := TStringlist.Create;
+          st3.Clear;
+          st4 := TStringlist.Create;
+          st4.Clear;
+          st.Text:= lines[y];
+          if find1 <> '' then
+            function_unit.findtext(find1,st,st1,x)
+          else
+            function_unit.findtext(find2,st,st1,x);
+          //showmessage(st1.Text);
+          s := st.Text;
+          if st1.Text <> '' then begin
+            if find1 <> '' then begin
+              s :=  StringReplace(Lines[y],find1,reprace1,[{rfReplaceAll}]);
+              {for i2 := strtoint(st1[0]) to strtoint(st1[0]) + length(find1) do begin
+                s[i2] := char(0);
+              end;}
+            end;
+            lines[y] := s;
+            if find2 <> '' then begin
+              st2.Add(lines[y]);
+              //検索して、最後日の検索結果を置き抱える。
+              for i1 := 0 to length(lines[y]) do begin
+                function_unit.findtext(find2,st2,st4,i1);
+                s2 := st4.Text;
+                if null <> s2 then
+                  st3.Add(s2);
+              end;
+              showmessage(st3.Text);
+              if Lines[y] <> '' then begin
+                        s := '';
+                        s2 := '';
+                        i4 := strtoint(st3[st3.Count-1]);
+                        s1 := lines[y];
+                        //i2 := ansipos(find2,s1);
+                        for i1 := 1 to i4 -1 do begin
+                          s2 := s2 + s1[i1];
+                        end;
+                       // showmessage(s2 + 'e'+ s1 + inttostr(i4));
+                        for i1 := i4 to length(s1) do begin
+                          s := s + s1[i1];
+                        end;
+                       // showmessage(s2 + ' ' + s);
+                        s := StringReplace(s,find2,reprace2,[{rfReplaceAll}]);
+                        //s2 := s2 + s;
+                        lines[y] := s2 + s;
+
+                        //showmessage(lines[y]);
+                    end;
+            end;
+          end;
+
+
+
+          if (st1.Text <> '') then
+            exit;
+            //Lines[y] := reprace1 + Lines[y] + reprace2;
+
+          if (reprace1 <> '') or (reprace2 <> '') then
+            if ( find1 = '') and ( find2 = '') then
+              Lines[y] := reprace1 + Lines[y] + reprace2;
+
+          st.Free;
+          st1.Free;
+          st2.Free;
+          //exit;
+       // end;
+        {Lines[y] := '+ ''' + Lines[y] + ''' + chr(13)';
+        exit;}
+      end;
+      //Lines[y] :=  Lines[y] + ' + chr(13)';
+    end;
+  //end;
+end;
+
+function TextCheng2(i,x,y:integer;find,reprace,msg:string):integer;
+var
+  s,s1,s2,s3:string;
+  i1,i2:integer;
+begin
+  with function_unit.editlist.Items[i].SynMemo1 do begin
+      if Lines[y-1] <> '' then begin
+          s := '';
+          s2 := '';
+          s1 := lines[y-1];
+          i2 := ansipos(find,s1);
+          for i1 := 1 to x -1 do begin
+            s2 := s2 + s1[i1];
+          end;
+          for i1 := x to length(s1) do begin
+            s := s + s1[i1];
+          end;
+          //showmessage(s2 + ' ' + s);
+          if msg = '中間' then
+            s :=  StringReplace(s,find,reprace,[{rfReplaceAll}]);
+          if (msg = '指定行') or (msg = '全列全行') then
+            s :=  StringReplace(s,find,reprace,[rfReplaceAll]);
+          //s2 := s2 + s;
+          lines[y-1] := s2 + s;
+      end;
+    end;
+  TextCheng2 := i2;
+end;
+
+function Tfunction_unit.reprace_macro(s,find,reprace:string;count:integer):boolean;
+var
+  i,pos:integer;
+  msg:string;
+  i1,i2,i3:integer;
+  st:TStringList;
+begin
+  i2 := 0;
+  with function_unit.editlist.Items[mainform.TabControl1.TabIndex] do begin
+  if s = '先頭' then begin
+    while i2 < count do begin
+      TextCheng(mainform.TabControl1.TabIndex,0,
+        editCaretY + i2 ,find,'',reprace,'');
+      inc(i2);
+    end;
+  end;
+
+  if s = '中間' then begin
+    while i2 < count do begin
+      i3 := TextCheng2(mainform.TabControl1.TabIndex,
+                 editCaretX,
+                 editCaretY+ i2 ,
+                 find,reprace,
+                 s);
+      inc(i2);
+    end;
+    //showmessage(inttostr(i3));
+    editCaretX := i3 + 1;
+    synmemo1.CaretX:= i3 + 1;
+  end;
+
+  if s = '行末' then begin
+    while i2 < count do begin
+      TextCheng(mainform.TabControl1.TabIndex,0,editCaretY + i2 ,'',find,'',reprace);
+      inc(i2);
+    end;
+  end;
+
+  if s = '指定行' then begin
+      TextCheng2(mainform.TabControl1.TabIndex,
+                 editCaretX,
+                 editCaretY ,
+                 find,reprace,
+                 s);
+  end;
+
+  if s = '全列全行' then begin
+      while i2 < SynMemo1.Lines.Count -1 do begin
+        TextCheng2(mainform.TabControl1.TabIndex,
+                   editCaretX,
+                   editCaretY+ i2 ,
+                   find,reprace,
+                   s);
+        inc(i2);
+      end;
+    end;
+
+  if s = '指定列' then begin
+      while i2 < SynMemo1.Lines.Count -1 do begin
+        i3 := TextCheng2(mainform.TabControl1.TabIndex,
+                   editCaretX,
+                   editCaretY+ i2 ,
+                   find,reprace,
+                   s);
+        inc(i2);
+      end;
+      editCaretX := i3 + 1;
+      synmemo1.CaretX:= i3 + 1;
+    end;
+  end;
+
+  {if s = '' then begin
+  i1 := MainForm.TabControl1.TabIndex;
+  msg  := '文字列を置き換えます' + chr($d) + chr($a) + 'よろしいですか？';
+  st := TStringLIst.Create;
+  st.Clear;
+  pos := 0;
+  while 0 <> count do begin
+    //find_form.listbox1.ItemIndex := i;
+    function_unit.reprace_selselect(pos,find);
+    if messagedlg(msg, mtinformation, [mbOk,mbNo,mbCancel], 0) = mrok then begin
+      if not MainForm.Menu_MemoMode.Checked then begin
+          editfrm[i1].SynMemo1.SelText:= reprace;
+        end else begin
+          editfrm[i1].Memo.SelText:= reprace;
+        end;
+        findtext2(find,i1,st);
+        if st.Text <> '' then
+          pos := strtoint(st[0]);
+      end else if  messagedlg(msg, mtinformation, [mbOk,mbNo,mbCancel], 0) = 1 then begin
+
+      end else if messagedlg(msg, mtinformation, [mbOk,mbNo,mbCancel], 0) = 2 then begin
+        st.Free;
+        break;
+      end;
+  end;
+  st.Free;
+  end;}
+end;
+
 function Tfunction_unit.frmpsnset(count:integer):boolean;
 begin
   with editlist.Items[count] do begin
@@ -606,6 +840,7 @@ begin
    //mainform.tabclicks := true;
    function_unit.resizewindow2;
 end;
+
 function Tfunction_unit.resizedocwindow(count:integer):boolean;
 begin
   //if MainForm.count > 0 then

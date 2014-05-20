@@ -41,7 +41,7 @@
         <PackageName Value="LCL"/>
       </Item4>
     </RequiredPackages>
-    <Units Count="6">
+    <Units Count="7">
       <Unit0>
         <Filename Value="fEdit_Mac.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -87,6 +87,14 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="find"/>
       </Unit5>
+      <Unit6>
+        <Filename Value="repracemacro.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="reprace_unit"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="repraceMacro"/>
+      </Unit6>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
