@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  edit;
+  edit, Process;
 
 type
    TeditList = class(TList)
@@ -33,6 +33,8 @@ type
     function window_off(i:integer):boolean;
     function newwindow(count:integer):boolean;
     function newedit(i:integer):boolean;
+
+    function Utf8ToAnsi_sh(i:integer;filename:String):boolean;
 
     function filesOpen:boolean;
     function open(i:integer;s:string):boolean;
@@ -83,6 +85,29 @@ end;
 function UTF16ToUTF8(const S: WIdeString):AnsiString;
 begin
   UTF16ToUTF8 := s;
+end;
+
+function TFunction_unit.Utf8ToAnsi_sh(i:integer;filename:String):boolean;
+var
+  Process:TProcess;
+  setFile: string;
+begin
+  setfile := ExtractFilePath( Paramstr(0) ) + 'tmp.txt';
+
+  Process := TProcess.Create(nil);
+  Process.Options := [poUsePipes, poStderrToOutPut];
+
+
+  Process.Commandline := 'sh -c "piconv -f sjis -t utf8 ' + filename + ' > ' + setfile + '"';
+  Process.Execute;
+  if Process.Running then begin
+  function_unit.editlist[ i ].lines_tmp.LoadFromFile( setfile );
+  function_unit.editlist.Items[ i ].SynMemo1.Lines.Text:= function_unit.editlist[ i ].lines_tmp.Text;
+  end;
+  Process.Commandline := 'sh -c "rm ' + setfile + '"';
+  Process.Execute;
+  Process.Free;
+
 end;
 
 function Tfunction_unit.set_char(i:integer;s:string):string;
@@ -226,15 +251,18 @@ end;
 
 function Tfunction_unit.open(i:integer;s:string):boolean;
 begin
-  function_unit.editlist[ i ].lines_tmp.LoadFromFile( s );
+
   if function_unit.editlist.Items[i].charset = '' then begin
     function_unit.editlist.Items[i].charset := function_unit.charset_new;
   end;
   if function_unit.editlist.Items[i].charset = 'Ansi' then begin
-    function_unit.editlist.Items[ i ].SynMemo1.Lines.Text:= utf8toansi(function_unit.editlist[ i ].lines_tmp.Text);
+     function_unit.Utf8ToAnsi_sh( i, s );
+
   end else if function_unit.editlist.Items[i].charset = 'Utf8' then begin
+    function_unit.editlist[ i ].lines_tmp.LoadFromFile( s );
     function_unit.editlist.Items[ i ].SynMemo1.Lines.Text:= (function_unit.editlist[ i ].lines_tmp.Text);
   end else if function_unit.editlist.Items[i].charset = 'Utf16' then begin
+    function_unit.editlist[ i ].lines_tmp.LoadFromFile( s );
     function_unit.editlist.Items[ i ].SynMemo1.Lines.Text:= Utf8toUtf16(function_unit.editlist[ i ].lines_tmp.Text);
   end;
 end;

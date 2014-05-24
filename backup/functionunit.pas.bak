@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  edit;
+  edit, Process;
 
 type
    TeditList = class(TList)
@@ -33,6 +33,8 @@ type
     function window_off(i:integer):boolean;
     function newwindow(count:integer):boolean;
     function newedit(i:integer):boolean;
+
+    function Utf8ToAnsi_sh(i:integer;filename:String):boolean;
 
     function filesOpen:boolean;
     function open(i:integer;s:string):boolean;
@@ -83,6 +85,30 @@ end;
 function UTF16ToUTF8(const S: WIdeString):AnsiString;
 begin
   UTF16ToUTF8 := s;
+end;
+
+function TFunction_unit.Utf8ToAnsi_sh(i:integer;filename:String):boolean;
+var
+  Process:TProcess;
+  setFile: string;
+begin
+  setfile := ExtractFilePath( Paramstr(0) ) + 'tmp.txt';
+
+  Process := TProcess.Create(nil);
+  Process.Options := [poUsePipes, poStderrToOutPut];
+
+
+  Process.Commandline := 'sh -c "piconv -f sjis -t utf8 ' + filename + ' > ' + setfile + '"';
+  Process.Execute;
+  if Process.Running then begin
+  //sleep(100);
+  function_unit.editlist[ i ].lines_tmp.LoadFromFile( setfile );
+  function_unit.editlist.Items[ i ].SynMemo1.Lines.Text:= function_unit.editlist[ i ].lines_tmp.Text;
+  end;
+  Process.Commandline := 'sh -c "rm ' + setfile + '"';
+  Process.Execute;
+  Process.Free;
+
 end;
 
 function Tfunction_unit.set_char(i:integer;s:string):string;
@@ -226,15 +252,18 @@ end;
 
 function Tfunction_unit.open(i:integer;s:string):boolean;
 begin
-  function_unit.editlist[ i ].lines_tmp.LoadFromFile( s );
+
   if function_unit.editlist.Items[i].charset = '' then begin
     function_unit.editlist.Items[i].charset := function_unit.charset_new;
   end;
   if function_unit.editlist.Items[i].charset = 'Ansi' then begin
-    function_unit.editlist.Items[ i ].SynMemo1.Lines.Text:= utf8toansi(function_unit.editlist[ i ].lines_tmp.Text);
+     function_unit.Utf8ToAnsi_sh( i, s );
+
   end else if function_unit.editlist.Items[i].charset = 'Utf8' then begin
+    function_unit.editlist[ i ].lines_tmp.LoadFromFile( s );
     function_unit.editlist.Items[ i ].SynMemo1.Lines.Text:= (function_unit.editlist[ i ].lines_tmp.Text);
   end else if function_unit.editlist.Items[i].charset = 'Utf16' then begin
+    function_unit.editlist[ i ].lines_tmp.LoadFromFile( s );
     function_unit.editlist.Items[ i ].SynMemo1.Lines.Text:= Utf8toUtf16(function_unit.editlist[ i ].lines_tmp.Text);
   end;
 end;
@@ -743,7 +772,7 @@ begin
       inc(i2);
     end;
     //showmessage(inttostr(i3));
-    eeditCaretX := i3 + 1;
+    editCaretX := i3 + 1;
     synmemo1.CaretX:= i3 + 1;
   end;
 
@@ -763,7 +792,7 @@ begin
   end;
 
   if s = '全列全行' then begin
-      while i2 < editfrm[mainform.TabControl1.TabIndex].SynMemo1.Lines.Count -1 do begin
+      while i2 < SynMemo1.Lines.Count -1 do begin
         TextCheng2(mainform.TabControl1.TabIndex,
                    editCaretX,
                    editCaretY+ i2 ,
@@ -774,7 +803,7 @@ begin
     end;
 
   if s = '指定列' then begin
-      while i2 < editfrm[mainform.TabControl1.TabIndex].SynMemo1.Lines.Count -1 do begin
+      while i2 < SynMemo1.Lines.Count -1 do begin
         i3 := TextCheng2(mainform.TabControl1.TabIndex,
                    editCaretX,
                    editCaretY+ i2 ,
