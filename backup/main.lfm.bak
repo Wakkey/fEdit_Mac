@@ -1,7 +1,7 @@
 object MainForm: TMainForm
-  Left = 328
+  Left = 327
   Height = 513
-  Top = 173
+  Top = 172
   Width = 607
   Caption = 'MainForm'
   ClientHeight = 513
@@ -199,32 +199,44 @@ object MainForm: TMainForm
       object MenuItem2: TMenuItem
         Caption = '-'
       end
+      object Menu_urlset: TMenuItem
+        Caption = '検索URL指定'
+        OnClick = Menu_urlsetClick
+      end
       object mnu_SelectORline: TMenuItem
         Caption = '行選択'
+        OnClick = mnu_SelectORlineClick
       end
       object Menu_URL: TMenuItem
         Caption = 'URL参照'
       end
       object Menu_helpgoogle1: TMenuItem
         Caption = '単語検索'
+        OnClick = Menu_helpgoogle1Click
       end
       object Menu_helpgoogle2: TMenuItem
         Caption = '単語検索　説明'
+        OnClick = Menu_helpgoogle2Click
       end
       object Menu_helpgoogle3: TMenuItem
         Caption = '単語検索　マニュアル'
+        OnClick = Menu_helpgoogle3Click
       end
       object Menu_helpgoogle4: TMenuItem
         Caption = '単語検索　入門'
+        OnClick = Menu_helpgoogle4Click
       end
       object Menu_helpgoogle5: TMenuItem
         Caption = '単語検索　サンプル'
+        OnClick = Menu_helpgoogle5Click
       end
       object Menu_helpgoogle6: TMenuItem
         Caption = '単語検索　テンプレート'
+        OnClick = Menu_helpgoogle6Click
       end
       object Menu_helpgoogle7: TMenuItem
         Caption = '単語検索　リファレンス'
+        OnClick = Menu_helpgoogle7Click
       end
       object MenuItem1: TMenuItem
         Caption = '-'

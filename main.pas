@@ -24,6 +24,7 @@ type
     MenuItem4: TMenuItem;
     MenuItem6: TMenuItem;
     MenuItem7: TMenuItem;
+    Menu_urlset: TMenuItem;
     Menu_Utf16: TMenuItem;
     Menu_Ansi: TMenuItem;
     Menu_repraceMcro: TMenuItem;
@@ -173,6 +174,13 @@ type
     procedure Menu_AnsiClick(Sender: TObject);
     procedure Menu_CloseClick(Sender: TObject);
     procedure Menu_FIndsClick(Sender: TObject);
+    procedure Menu_helpgoogle1Click(Sender: TObject);
+    procedure Menu_helpgoogle2Click(Sender: TObject);
+    procedure Menu_helpgoogle3Click(Sender: TObject);
+    procedure Menu_helpgoogle4Click(Sender: TObject);
+    procedure Menu_helpgoogle5Click(Sender: TObject);
+    procedure Menu_helpgoogle6Click(Sender: TObject);
+    procedure Menu_helpgoogle7Click(Sender: TObject);
     procedure Menu_Insert_CalacClick(Sender: TObject);
     procedure Menu_Insert_DayClick(Sender: TObject);
     procedure Menu_Insert_TimeClick(Sender: TObject);
@@ -182,8 +190,11 @@ type
     procedure Menu_ReOpenClick(Sender: TObject);
     procedure Menu_SaveAsClick(Sender: TObject);
     procedure menu_saveClick(Sender: TObject);
+    procedure Menu_URLClick(Sender: TObject);
+    procedure Menu_urlsetClick(Sender: TObject);
     procedure Menu_Utf16Click(Sender: TObject);
     procedure Menu_UTF8_AnsiClick(Sender: TObject);
+    procedure mnu_SelectORlineClick(Sender: TObject);
     procedure peastClick(Sender: TObject);
     procedure redoClick(Sender: TObject);
     procedure selctallClick(Sender: TObject);
@@ -238,6 +249,22 @@ begin
   function_unit.save(mainform.TabControl1.TabIndex);
 end;
 
+procedure TMainForm.Menu_URLClick(Sender: TObject);
+var
+  s:string;
+begin
+  s := function_unit.find_internet_word;
+  function_unit.find_internet_word := '';
+  function_unit.find_internet(mainform.TabControl1.TabIndex,'');
+  function_unit.find_internet_word:= s;
+end;
+
+procedure TMainForm.Menu_urlsetClick(Sender: TObject);
+begin
+  function_unit.find_internet_word:=
+  InputBox('検索エンジン指定', '検索エンジンのURLを入力してください。', 'https://www.google.co.jp/search?q=');
+end;
+
 procedure TMainForm.Menu_AnsiClick(Sender: TObject);
 begin
   function_unit.set_char(mainform.TabControl1.TabIndex,'Ansi');
@@ -251,6 +278,15 @@ end;
 procedure TMainForm.Menu_UTF8_AnsiClick(Sender: TObject);
 begin
   function_unit.set_char(mainform.TabControl1.TabIndex,'Utf8');
+end;
+
+procedure TMainForm.mnu_SelectORlineClick(Sender: TObject);
+begin
+  if mnu_SelectORLine.Caption= '行選択' then begin
+    mnu_SelectORLine.Caption := '範囲選択';
+  end else begin
+    mnu_SelectORLine.Caption := '行選択';
+  end;
 end;
 
 procedure TMainForm.peastClick(Sender: TObject);
@@ -342,6 +378,41 @@ end;
 procedure TMainForm.Menu_FIndsClick(Sender: TObject);
 begin
   find_form.Show;
+end;
+
+procedure TMainForm.Menu_helpgoogle1Click(Sender: TObject);
+begin
+  function_unit.find_internet(mainform.TabControl1.TabIndex,'');
+end;
+
+procedure TMainForm.Menu_helpgoogle2Click(Sender: TObject);
+begin
+   function_unit.find_internet(mainform.TabControl1.TabIndex,'document');
+end;
+
+procedure TMainForm.Menu_helpgoogle3Click(Sender: TObject);
+begin
+   function_unit.find_internet(mainform.TabControl1.TabIndex,'Manual');
+end;
+
+procedure TMainForm.Menu_helpgoogle4Click(Sender: TObject);
+begin
+   function_unit.find_internet(mainform.TabControl1.TabIndex,'biginer');
+end;
+
+procedure TMainForm.Menu_helpgoogle5Click(Sender: TObject);
+begin
+   function_unit.find_internet(mainform.TabControl1.TabIndex,'sample');
+end;
+
+procedure TMainForm.Menu_helpgoogle6Click(Sender: TObject);
+begin
+   function_unit.find_internet(mainform.TabControl1.TabIndex,'Templete');
+end;
+
+procedure TMainForm.Menu_helpgoogle7Click(Sender: TObject);
+begin
+   function_unit.find_internet(mainform.TabControl1.TabIndex,'refalence');
 end;
 
 procedure TMainForm.Menu_Insert_CalacClick(Sender: TObject);

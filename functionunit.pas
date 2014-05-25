@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  edit, Process;
+  edit, Process, LCLIntf;
 
 type
    TeditList = class(TList)
@@ -28,6 +28,7 @@ type
     editlist:Teditlist;
     TitleName:string;
     charset_new:string;
+    find_internet_word:string;
     Listset:array[0..255] of TStringList;
     function set_char(i:integer;s:string):string;
     function window_off(i:integer):boolean;
@@ -51,6 +52,8 @@ type
     function findallpage: boolean;
     function TXTReplace:boolean;
     function selselect(i:integer): boolean;
+
+    function find_internet(i:integer;Setword:String):boolean;
 
     function chingSize(i:integer):boolean;
     function frmpsnset(count:integer):boolean;
@@ -168,6 +171,7 @@ begin
   editlist.clear;
   function_unit.charset_new:= 'Utf8';
   TitleName := 'fEdit 0.10 ';
+  function_unit.find_internet_word:='https://www.google.co.jp/search?q=';
 end;
 
 
@@ -895,6 +899,33 @@ begin
    mainform.Caption:= function_unit.TitleName + '[' + function_unit.editlist.Items[ i ].filename_path + ']';
    //mainform.tabclicks := true;
    function_unit.resizewindow2;
+end;
+
+function TFunction_unit.find_internet(i:integer;Setword:String):boolean;
+var
+  s:string;
+  function seting(setword2,setword3:string):boolean;
+  begin
+    if mainform.mnu_SelectORLine.Caption= '行選択' then begin
+      s := setword + ' ' + setword2;
+    end else begin
+      s := setword + ' ' + setword3;
+    end;
+  end;
+  function ifmemo(i:integer):boolean;
+  begin
+    with function_unit.editlist.Items[i] do begin
+      if Memo1.Visible then  begin
+        seting(memo1.Lines[memo1.CaretPos.Y],memo1.SelText);
+      end else begin
+        seting(synmemo1.Lines[synmemo1.CaretY],synmemo1.SelText)
+      end;
+    end;
+  end;
+begin
+  ifmemo(i);
+  //showmessage(s);
+  OpenURL(function_unit.find_internet_word + ' ' + s);
 end;
 
 function Tfunction_unit.resizedocwindow(count:integer):boolean;
