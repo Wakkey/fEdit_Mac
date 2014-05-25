@@ -298,12 +298,8 @@ begin
 end;
 
 procedure TMainForm.FormCloseQuery(Sender: TObject; var CanClose: boolean);
-var
-  i:integer;
 begin
-  for i := 0 to mainform.TabControl1.Tabs.Count -1 do begin
-    function_unit.editlist.Items[i].Memo1.Visible:= false;
-  end;
+  function_unit.closeAllTab;
 end;
 
 procedure TMainForm.cutClick(Sender: TObject);

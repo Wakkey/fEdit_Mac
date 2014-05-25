@@ -35,6 +35,7 @@ type
     function newedit(i:integer):boolean;
 
     function Utf8ToAnsi_sh(i:integer;filename:String):boolean;
+    function AnsiToUtf8_sh(i:integer;filename:String):boolean;
 
     function filesOpen:boolean;
     function open(i:integer;s:string):boolean;
@@ -101,14 +102,40 @@ begin
   Process.Commandline := 'sh -c "piconv -f sjis -t utf8 ' + filename + ' > ' + setfile + '"';
   Process.Execute;
   if Process.Running then begin
-  function_unit.editlist[ i ].lines_tmp.LoadFromFile( setfile );
-  function_unit.editlist.Items[ i ].SynMemo1.Lines.Text:= function_unit.editlist[ i ].lines_tmp.Text;
+    sleep(100);
+    function_unit.editlist[ i ].lines_tmp.LoadFromFile( setfile );
+    function_unit.editlist.Items[ i ].SynMemo1.Lines.Text:= function_unit.editlist[ i ].lines_tmp.Text;
   end;
   Process.Commandline := 'sh -c "rm ' + setfile + '"';
   Process.Execute;
   Process.Free;
 
 end;
+
+
+function TFunction_unit.AnsiToUtf8_sh(i:integer;filename:String):boolean;
+var
+  Process:TProcess;
+  setFile,savefile: string;
+begin
+  savefile := ExtractFilePath( Paramstr(0) ) + 'save.txt';
+  with function_unit.editlist.Items[i] do begin
+    if not Memo1.Visible then begin
+      lines_tmp.Text := synmemo1.Lines.Text;
+    end else begin
+      lines_tmp.Text:= memo1.Lines.Text;
+    end;
+    lines_tmp.SaveToFile( savefile );
+  end;
+  Process := TProcess.Create(nil);
+  Process.Options := [poUsePipes, poStderrToOutPut];
+  Process.Commandline := 'sh -c "piconv -f utf8 -t sjis ' + savefile + ' > ' + filename + '"';
+  Process.Execute;
+  Process.Commandline := 'sh -c "rm ' + savefile + '"';
+  Process.Execute;
+  Process.Free;
+end;
+
 
 function Tfunction_unit.set_char(i:integer;s:string):string;
 begin
@@ -274,23 +301,24 @@ begin
   s := function_unit.set_char(i,'?');
   with function_unit.editlist.Items[i] do begin
     if not memo1.Visible then begin
-      if s = 'Ansi' then begin
-        lines_tmp.Text := Utf8toAnsi(SynMemo1.Text);
-      end else if s = 'Utf8' then begin
+
+      if s = 'Utf8' then begin
         lines_tmp.Text := (SynMemo1.Text);
       end else if s = 'Utf16' then begin
         lines_tmp.Text := Utf8toUtf16(SynMemo1.Text);
       end;
     end else begin
-      if s = 'Ansi' then begin
-        lines_tmp.Text := Utf8toAnsi(Memo1.Text);
-      end else if s = 'Utf8' then begin
+      if s = 'Utf8' then begin
         lines_tmp.Text := (Memo1.Text);
       end else if s = 'Utf16' then begin
         lines_tmp.Text := Utf8toUtf16(Memo1.Text);
       end;
     end;
     lines_tmp.SaveToFile(filename_path);
+    if s = 'Ansi' then begin
+      AnsiToUtf8_sh(i,filename_path);
+      exit;
+    end;
   end;
 end;
 
@@ -910,8 +938,12 @@ end;
 
 function Tfunction_unit.closeTab(i:integer):boolean;
 begin
-  function_unit.editlist.Items[i].Close;
-  function_unit.editlist.Delete(i);
+  with function_unit.editlist do begin
+    Items[i].Memo1.Clear;
+    Items[i].Memo1.Free;
+    Items[i].Close;
+    Delete(i);
+  end;
   mainform.TabControl1.Tabs.Delete(i);
 end;
 
