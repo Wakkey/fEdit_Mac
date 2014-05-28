@@ -434,9 +434,9 @@ procedure TMainForm.Menu_MemoModeClick(Sender: TObject);
 begin
   with function_unit.editlist.Items[mainform.TabControl1.TabIndex] do begin
     if not memo1.Visible then begin
-      memo1.Text := synmemo1.Text;
+      memo1.Lines.Text := synmemo1.Lines.Text;
     end else begin
-      synmemo1.Text := memo1.Text;
+      synmemo1.Lines.Text := memo1.Lines.Text;
     end;
     Memo1.Visible:= not memo1.Visible;
     synmemo1.Visible:= not synmemo1.Visible;

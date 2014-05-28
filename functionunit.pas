@@ -95,6 +95,7 @@ function TFunction_unit.Utf8ToAnsi_sh(i:integer;filename:String):boolean;
 var
   Process:TProcess;
   setFile: string;
+  i1:integer;
 begin
   setfile := ExtractFilePath( Paramstr(0) ) + 'tmp.txt';
 
@@ -104,11 +105,17 @@ begin
 
   Process.Commandline := 'sh -c "piconv -f sjis -t utf8 ' + filename + ' > ' + setfile + '"';
   Process.Execute;
-  if Process.Running then begin
-    sleep(100);
-    function_unit.editlist[ i ].lines_tmp.LoadFromFile( setfile );
-    function_unit.editlist.Items[ i ].SynMemo1.Lines.Text:= function_unit.editlist[ i ].lines_tmp.Text;
+    i1 := 0;
+  while Process.Active do begin
+    inc(i1);
   end;
+  i1 := i1 div 1000;
+  //showmessage(inttostr(i));
+  sleep(i1);
+
+
+  function_unit.editlist[ i ].lines_tmp.LoadFromFile( setfile );
+  function_unit.editlist.Items[ i ].SynMemo1.Lines.Text:= function_unit.editlist[ i ].lines_tmp.Text;
   Process.Commandline := 'sh -c "rm ' + setfile + '"';
   Process.Execute;
   Process.Free;
@@ -142,7 +149,7 @@ end;
 
 function Tfunction_unit.set_char(i:integer;s:string):string;
 begin
-  function_unit.charset_new:= s;
+  //function_unit.charset_new:= s;
   if  s = 'Ansi' then begin
     mainform.Menu_Ansi.Checked:=true;
     mainform.Menu_UTF8_Ansi.Checked:=false;
@@ -254,9 +261,19 @@ begin
 end;
 
 function Tfunction_unit.newedit(i:integer):boolean;
+var
+  s:string;
 begin
+  if mainform.Menu_Ansi.Checked then begin
+    s := 'Ansi';
+  end else if mainform.Menu_UTF8_Ansi.Checked then begin
+    s := 'Utf8';
+  end else if mainform.Menu_Utf16.Checked then begin
+    s := 'Utf16';
+  end;
   function_unit.newwindow(i);
   function_unit.window_off(i);
+  function_unit.editlist.Items[i].charset:= s;
   mainform.TabControl1.TabIndex:= i;
   //function_unit.chengtab(i);
    //mainform.tabclicks := true;
@@ -303,6 +320,10 @@ var
   s:string;
 begin
   s := function_unit.set_char(i,'?');
+  if s = '' then begin
+    s := function_unit.charset_new;
+
+  end;
   with function_unit.editlist.Items[i] do begin
     if not memo1.Visible then begin
 
@@ -312,8 +333,10 @@ begin
         lines_tmp.Text := Utf8toUtf16(SynMemo1.Text);
       end;
     end else begin
+      //showmessage(s);
       if s = 'Utf8' then begin
-        lines_tmp.Text := (Memo1.Text);
+
+        lines_tmp.Text := (Memo1.Lines.Text);
       end else if s = 'Utf16' then begin
         lines_tmp.Text := Utf8toUtf16(Memo1.Text);
       end;

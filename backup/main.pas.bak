@@ -190,6 +190,7 @@ type
     procedure Menu_ReOpenClick(Sender: TObject);
     procedure Menu_SaveAsClick(Sender: TObject);
     procedure menu_saveClick(Sender: TObject);
+    procedure Menu_URLClick(Sender: TObject);
     procedure Menu_urlsetClick(Sender: TObject);
     procedure Menu_Utf16Click(Sender: TObject);
     procedure Menu_UTF8_AnsiClick(Sender: TObject);
@@ -246,6 +247,16 @@ end;
 procedure TMainForm.menu_saveClick(Sender: TObject);
 begin
   function_unit.save(mainform.TabControl1.TabIndex);
+end;
+
+procedure TMainForm.Menu_URLClick(Sender: TObject);
+var
+  s:string;
+begin
+  s := function_unit.find_internet_word;
+  function_unit.find_internet_word := '';
+  function_unit.find_internet(mainform.TabControl1.TabIndex,'');
+  function_unit.find_internet_word:= s;
 end;
 
 procedure TMainForm.Menu_urlsetClick(Sender: TObject);

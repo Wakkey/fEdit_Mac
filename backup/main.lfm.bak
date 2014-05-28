@@ -1,7 +1,7 @@
 object MainForm: TMainForm
   Left = 327
   Height = 513
-  Top = 172
+  Top = 166
   Width = 607
   Caption = 'MainForm'
   ClientHeight = 513
@@ -209,6 +209,7 @@ object MainForm: TMainForm
       end
       object Menu_URL: TMenuItem
         Caption = 'URL参照'
+        OnClick = Menu_URLClick
       end
       object Menu_helpgoogle1: TMenuItem
         Caption = '単語検索'
